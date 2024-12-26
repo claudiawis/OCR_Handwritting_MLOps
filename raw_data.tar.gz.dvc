@@ -1,0 +1,5 @@
+outs:
+- md5: b829b5192b30f62c8770837b5f44616c
+  size: 4252862892
+  hash: md5
+  path: raw_data.tar.gz
