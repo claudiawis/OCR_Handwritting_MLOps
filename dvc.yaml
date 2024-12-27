@@ -1,0 +1,8 @@
+stages:
+  extract_data:
+    cmd: python src/data/extract_raw_data.py
+    deps:
+    - data/raw/raw_data.tar.gz
+    - src/data/extract_raw_data.py
+    outs:
+    - data/raw/raw_data/data

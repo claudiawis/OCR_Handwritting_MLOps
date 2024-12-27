@@ -1,0 +1,19 @@
+schema: '2.0'
+stages:
+  extract_data:
+    cmd: python src/data/extract_raw_data.py
+    deps:
+    - path: data/raw/raw_data.tar.gz
+      hash: md5
+      md5: b829b5192b30f62c8770837b5f44616c
+      size: 4252862892
+    - path: src/data/extract_raw_data.py
+      hash: md5
+      md5: 2f5336836443255ea024744137d795fa
+      size: 784
+    outs:
+    - path: data/raw/raw_data/data
+      hash: md5
+      md5: 7a1bc51668ef88b5b4f4c26768b8e38b.dir
+      size: 4673866974
+      nfiles: 439354
