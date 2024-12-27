@@ -6,3 +6,10 @@ stages:
     - src/data/extract_raw_data.py
     outs:
     - data/raw/raw_data/data
+  load_dataset:
+    cmd: python src/data/load_dataset.py
+    deps:
+    - data/raw/raw_data/data
+    - src/data/load_dataset.py
+    outs:
+    - data/raw/words.csv

@@ -17,3 +17,20 @@ stages:
       md5: 7a1bc51668ef88b5b4f4c26768b8e38b.dir
       size: 4673866974
       nfiles: 439354
+  load_dataset:
+    cmd: python src/data/load_dataset.py
+    deps:
+    - path: data/raw/raw_data/data
+      hash: md5
+      md5: 7a1bc51668ef88b5b4f4c26768b8e38b.dir
+      size: 4673866974
+      nfiles: 439354
+    - path: src/data/load_dataset.py
+      hash: md5
+      md5: b5f4b5cd8460452ebe1ff5d9904012e2
+      size: 2043
+    outs:
+    - path: data/raw/words.csv
+      hash: md5
+      md5: 83aacd67b31e17cb7264483a602c800c
+      size: 12638385
