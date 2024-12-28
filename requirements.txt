@@ -1,3 +1,4 @@
 dvc
 pandas
 nltk
+scikit-learn

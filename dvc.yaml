@@ -27,3 +27,10 @@ stages:
     - src/data/clean_data.py
     outs:
     - data/processed/cleaned_data.csv
+  encode_data:
+    cmd: python src/data/encode_data.py
+    deps:
+    - data/processed/cleaned_data.csv
+    - src/data/encode_data.py
+    outs:
+    - data/processed/encoded_data.csv
