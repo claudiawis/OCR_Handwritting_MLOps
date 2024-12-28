@@ -1,3 +1,13 @@
+'''
+To improve the quality and balance of the dataset, we filter the transcriptions based on their frequency. 
+Transcriptions that occur either too frequently or too rarely can lead to imbalance or overfitting during model training. In this section, we:
+
+1. Set a range for transcription frequency.
+2. Filter the dataset to keep only transcriptions that fall within the desired range.
+3. Reset the index to ensure the filtered DataFrame has a clean, continuous index.
+4. Print the unique transcriptions in the filtered dataset to verify the diversity.
+'''
+
 import pandas as pd
 
 # Set the minimum and maximum sample counts for filtering transcriptions
@@ -19,6 +29,7 @@ df_filtered.reset_index(drop=True, inplace=True)
 # Output the filtered data to a new CSV file
 output_file = 'data/processed/filtered_data.csv'
 df_filtered.to_csv(output_file, index=False)
+print('Successfully filtered data and saved to', output_file)
 
 # Print unique transcriptions remaining in the filtered dataset
 print("Unique transcriptions remaining in the filtered dataset:")

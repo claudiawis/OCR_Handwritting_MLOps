@@ -1,3 +1,15 @@
+'''
+In this section, we extract the contents of a .tar.gz archive from a specified path to a designated directory. 
+This process involves verifying the existence of the archive file and ensuring that the target extraction directory is created if it does not already exist.
+
+- Archive Path: We define the path to the .tar.gz file that needs to be extracted.
+- Extraction Directory: We specify the directory where the contents of the archive will be placed. If this directory does not exist, it will be created automatically.
+- Extraction Process: We utilize the tarfile module to open the archive and extract all files into the specified directory, 
+  ensuring that the files are properly placed for further use.
+- Error Handling: The function includes checks to confirm the presence of the archive file, and it outputs an error message if the file is missing, 
+  preventing any extraction attempts.
+'''
+
 import tarfile
 import os
 

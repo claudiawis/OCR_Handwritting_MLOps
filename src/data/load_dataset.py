@@ -1,3 +1,11 @@
+'''
+In this section, we load the handwritten text dataset from a specified directory and create a structured dataset that combines image paths with their corresponding transcription labels. We also verify the availability of image files to filter out corrupted or missing entries.
+
+- Dataset Path: We define the root path to the image dataset.
+- Word Transcriptions: We read the words.txt file, which contains metadata about the handwritten samples, including file names and corresponding transcriptions.
+- Data Integrity Check: We ensure that all referenced images exist and are not corrupted. Invalid entries are counted.
+'''
+
 import os
 import pandas as pd
 from tqdm import tqdm
