@@ -34,3 +34,35 @@ stages:
       hash: md5
       md5: 83aacd67b31e17cb7264483a602c800c
       size: 12638385
+  load_data:
+    cmd: python src/data/filter_data.py
+    deps:
+    - path: data/raw/words.csv
+      hash: md5
+      md5: 83aacd67b31e17cb7264483a602c800c
+      size: 12638385
+    - path: src/data/filter_data.py
+      hash: md5
+      md5: e7b38ef73e9a05b079c9f0fe78ae7d07
+      size: 1281
+    outs:
+    - path: data/processed/filtered_data.csv
+      hash: md5
+      md5: 2dc75802f376758c9f8ff593fae2709a
+      size: 719143
+  filter_data:
+    cmd: python src/data/filter_data.py
+    deps:
+    - path: data/raw/words.csv
+      hash: md5
+      md5: 83aacd67b31e17cb7264483a602c800c
+      size: 12638385
+    - path: src/data/filter_data.py
+      hash: md5
+      md5: e7b38ef73e9a05b079c9f0fe78ae7d07
+      size: 1281
+    outs:
+    - path: data/processed/filtered_data.csv
+      hash: md5
+      md5: 2dc75802f376758c9f8ff593fae2709a
+      size: 719143

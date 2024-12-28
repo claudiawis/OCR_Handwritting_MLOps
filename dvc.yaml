@@ -13,3 +13,10 @@ stages:
     - src/data/load_dataset.py
     outs:
     - data/raw/words.csv
+  filter_data:
+    cmd: python src/data/filter_data.py
+    deps:
+    - data/raw/words.csv
+    - src/data/filter_data.py
+    outs:
+    - data/processed/filtered_data.csv
