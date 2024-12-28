@@ -66,3 +66,19 @@ stages:
       hash: md5
       md5: 2dc75802f376758c9f8ff593fae2709a
       size: 719143
+  clean_data:
+    cmd: python src/data/clean_data.py
+    deps:
+    - path: data/processed/filtered_data.csv
+      hash: md5
+      md5: 2dc75802f376758c9f8ff593fae2709a
+      size: 719143
+    - path: src/data/clean_data.py
+      hash: md5
+      md5: 56b39d65d45e60644b79f4311feb11c9
+      size: 1375
+    outs:
+    - path: data/processed/cleaned_data.csv
+      hash: md5
+      md5: 0f40a569b05eeaac6bf144b3d9ab7a83
+      size: 291380

@@ -20,3 +20,10 @@ stages:
     - src/data/filter_data.py
     outs:
     - data/processed/filtered_data.csv
+  clean_data:
+    cmd: python src/data/clean_data.py
+    deps:
+    - data/processed/filtered_data.csv
+    - src/data/clean_data.py
+    outs:
+    - data/processed/cleaned_data.csv
