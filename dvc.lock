@@ -174,3 +174,19 @@ stages:
       hash: md5
       md5: 2c6ae84e0e026bfe54b877e8cb2a4346
       size: 13441024
+  calculate_class_weights:
+    cmd: python src/data/calculate_class_weights.py
+    deps:
+    - path: data/processed/Y_train.npy
+      hash: md5
+      md5: 7a90df12370a514f50cd7387853f1feb
+      size: 17272
+    - path: src/data/calculate_class_weights.py
+      hash: md5
+      md5: 52abce1c513420a48d53aefc93565582
+      size: 1214
+    outs:
+    - path: data/processed/class_weights.npy
+      hash: md5
+      md5: 7d7c997e88b8f20c73f74ee61e53cc2b
+      size: 744

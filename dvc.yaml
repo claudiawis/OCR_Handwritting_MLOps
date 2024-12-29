@@ -62,3 +62,10 @@ stages:
     outs:
       - data/processed/X_train_reshaped.npy
       - data/processed/X_test_reshaped.npy
+  calculate_class_weights:
+    cmd: python src/data/calculate_class_weights.py
+    deps:
+      - src/data/calculate_class_weights.py
+      - data/processed/Y_train.npy
+    outs:
+      - data/processed/class_weights.npy

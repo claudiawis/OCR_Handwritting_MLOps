@@ -9,3 +9,4 @@
 /Y_test.npy
 /X_train_reshaped.npy
 /X_test_reshaped.npy
+/class_weights.npy
