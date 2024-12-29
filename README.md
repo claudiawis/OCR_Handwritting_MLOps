@@ -18,9 +18,40 @@ After activation, your shell prompt will change to indicate that the virtual env
 
 ### 3. Install Required Packages
 
-To install the necessary packages for the project, use the `requirements.txt` file. This file lists all the dependencies required for the project. Run the following command:
+#### Data Handling
+- **`pandas`**: Provides powerful data structures like DataFrames for reading, processing, and analyzing tabular data (e.g., CSV files).
+- **`numpy`**: Enables efficient numerical operations and array processing, often used for handling image and numerical data.
+- **`tqdm`**: A lightweight library to add progress bars, useful for visualizing the execution of loops in scripts.
 
-    pip install -r requirements.txt
+#### Natural Language Processing
+- **`nltk`**: Used for text processing tasks, such as removing stopwords and cleaning transcriptions. Essential for preparing labels in text datasets.
+
+#### Image Processing
+- **`opencv-python-headless`**: A library for advanced image processing tasks, such as resizing, transformations, and feature extraction. The "headless" version is used in environments without a GUI.
+- **`Pillow`**: A lightweight library for handling and manipulating image files, such as reading, resizing, and converting images.
+
+#### Deep Learning Frameworks
+- **`tensorflow`**: A comprehensive deep learning framework used for building and training neural networks. It's the core framework for training the CNN model in this project.
+- **`keras`**: An abstraction layer over TensorFlow, simplifying model creation and training workflows.
+
+#### Machine Learning Utilities
+- **`scikit-learn`**: Provides tools for machine learning tasks like preprocessing (e.g., label encoding), model evaluation, and train-test splitting.
+
+#### Version Control and Repository Management
+- **`dvc`**: A data version control system that manages datasets, models, and ML pipelines effectively. It integrates well with Git and other tools.
+- **`dvc-http`**: A DVC extension for enabling HTTP/HTTPS remote storage, useful for connecting repositories with cloud platforms.
+- **`dagshub`**: A collaborative platform that integrates with DVC and Git, streamlining ML project versioning and visualization.
+
+#### Security and Cryptography
+- **`cryptography`**: A library for secure operations, required by DVC to handle encrypted remote connections securely.
+
+---
+
+#### Installation
+
+To install the necessary libraries, use the following command:
+
+pip install -r requirements.txt
 
 ### 4. Set Up DVC (Data Version Control)
 
