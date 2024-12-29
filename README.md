@@ -45,8 +45,6 @@ After activation, your shell prompt will change to indicate that the virtual env
 #### Security and Cryptography
 - **`cryptography`**: A library for secure operations, required by DVC to handle encrypted remote connections securely.
 
----
-
 #### Installation
 
 To install the necessary libraries, use the following command:
