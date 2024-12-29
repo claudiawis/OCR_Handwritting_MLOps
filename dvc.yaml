@@ -53,3 +53,12 @@ stages:
       - data/processed/X_test.npy
       - data/processed/Y_train.npy
       - data/processed/Y_test.npy
+  reshape_data:
+    cmd: python src/data/reshape_data.py
+    deps:
+      - src/data/reshape_data.py
+      - data/processed/X_train.npy
+      - data/processed/X_test.npy
+    outs:
+      - data/processed/X_train_reshaped.npy
+      - data/processed/X_test_reshaped.npy
