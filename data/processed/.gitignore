@@ -1,3 +1,5 @@
 /filtered_data.csv
 /cleaned_data.csv
 /encoded_data.csv
+/features.npy
+/labels.npy

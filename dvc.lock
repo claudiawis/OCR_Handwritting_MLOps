@@ -9,8 +9,8 @@ stages:
       size: 4252862892
     - path: src/data/extract_raw_data.py
       hash: md5
-      md5: 2f5336836443255ea024744137d795fa
-      size: 784
+      md5: f08028231da32e4f4e2b4fbf41cc90ca
+      size: 1723
     outs:
     - path: data/raw/raw_data/data
       hash: md5
@@ -27,13 +27,13 @@ stages:
       nfiles: 439354
     - path: src/data/load_dataset.py
       hash: md5
-      md5: b5f4b5cd8460452ebe1ff5d9904012e2
-      size: 2043
+      md5: 7c66008b47c609208a36594415472518
+      size: 2731
     outs:
     - path: data/raw/words.csv
       hash: md5
-      md5: 83aacd67b31e17cb7264483a602c800c
-      size: 12638385
+      md5: 01f562cef485e6f76c5ec55c41e136fc
+      size: 12753704
   load_data:
     cmd: python src/data/filter_data.py
     deps:
@@ -55,46 +55,66 @@ stages:
     deps:
     - path: data/raw/words.csv
       hash: md5
-      md5: 83aacd67b31e17cb7264483a602c800c
-      size: 12638385
+      md5: 01f562cef485e6f76c5ec55c41e136fc
+      size: 12753704
     - path: src/data/filter_data.py
       hash: md5
-      md5: e7b38ef73e9a05b079c9f0fe78ae7d07
-      size: 1281
+      md5: 45b6d1068281f8acf8e2255a5ad6c53d
+      size: 1936
     outs:
     - path: data/processed/filtered_data.csv
       hash: md5
-      md5: 2dc75802f376758c9f8ff593fae2709a
-      size: 719143
+      md5: 10f4a07002ea79385e06e7f6c5a7492b
+      size: 725765
   clean_data:
     cmd: python src/data/clean_data.py
     deps:
     - path: data/processed/filtered_data.csv
       hash: md5
-      md5: 2dc75802f376758c9f8ff593fae2709a
-      size: 719143
+      md5: 10f4a07002ea79385e06e7f6c5a7492b
+      size: 725765
     - path: src/data/clean_data.py
       hash: md5
-      md5: 56b39d65d45e60644b79f4311feb11c9
-      size: 1375
+      md5: ffab648993b4aef7899b36c90290e13d
+      size: 2369
     outs:
     - path: data/processed/cleaned_data.csv
       hash: md5
-      md5: 0f40a569b05eeaac6bf144b3d9ab7a83
-      size: 291380
+      md5: f2a594b72407cbab7a4d13ee8e922e76
+      size: 294060
   encode_data:
     cmd: python src/data/encode_data.py
     deps:
     - path: data/processed/cleaned_data.csv
       hash: md5
-      md5: 0f40a569b05eeaac6bf144b3d9ab7a83
-      size: 291380
+      md5: f2a594b72407cbab7a4d13ee8e922e76
+      size: 294060
     - path: src/data/encode_data.py
       hash: md5
-      md5: a0518bbfe907e4139ea6d772815a0573
-      size: 1023
+      md5: 79b4a8b51e4d72a20bc4e78656a340ce
+      size: 1051
     outs:
     - path: data/processed/encoded_data.csv
       hash: md5
-      md5: 5c1b3f7d225bdad4fb25552837395833
-      size: 298046
+      md5: ff9b703e84a491e836c28f513ab6cb20
+      size: 300726
+  prepare_features:
+    cmd: python src/data/prepare_features.py
+    deps:
+    - path: data/processed/encoded_data.csv
+      hash: md5
+      md5: ff9b703e84a491e836c28f513ab6cb20
+      size: 300726
+    - path: src/data/prepare_features.py
+      hash: md5
+      md5: 096ee179cb93164961edcd05b63fdbf3
+      size: 2121
+    outs:
+    - path: data/processed/features.npy
+      hash: md5
+      md5: 8e0ac2041649313567d4481236ff4c05
+      size: 16802816
+    - path: data/processed/labels.npy
+      hash: md5
+      md5: 27867d9a998088c637c4ecba042f37bf
+      size: 21560

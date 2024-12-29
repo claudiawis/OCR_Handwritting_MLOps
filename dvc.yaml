@@ -34,3 +34,11 @@ stages:
     - src/data/encode_data.py
     outs:
     - data/processed/encoded_data.csv
+  prepare_features:
+    cmd: python src/data/prepare_features.py
+    deps:
+      - src/data/prepare_features.py
+      - data/processed/encoded_data.csv
+    outs:
+      - data/processed/features.npy
+      - data/processed/labels.npy
