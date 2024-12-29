@@ -96,6 +96,10 @@ This command will download the dataset files specified in your DVC configuration
 
     python src/data/load_dataset.py 
 
+### 8. Preparing Input Features and Labels
+
+    python src/data/prepare_feature.py 
+
 ---
 
 Following these steps will set up your project environment correctly and ensure that all necessary dependencies and datasets are available for development and testing. If you encounter any issues, please refer to the troubleshooting section or contact the project maintainers for assistance.
