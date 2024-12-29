@@ -10,3 +10,5 @@
 /X_train_reshaped.npy
 /X_test_reshaped.npy
 /class_weights.npy
+/y_train_one_hot.npy
+/y_test_one_hot.npy

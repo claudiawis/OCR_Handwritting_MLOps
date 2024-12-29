@@ -112,6 +112,10 @@ This command will download the dataset files specified in your DVC configuration
 
     python src/data/calculate_class_weights.py
 
+### 12. One-Hot Encoding Labels
+
+    python src/data/one_hot_encode_labels.py
+
 ---
 
 Following these steps will set up your project environment correctly and ensure that all necessary dependencies and datasets are available for development and testing. If you encounter any issues, please refer to the troubleshooting section or contact the project maintainers for assistance.

@@ -69,3 +69,12 @@ stages:
       - data/processed/Y_train.npy
     outs:
       - data/processed/class_weights.npy
+  one_hot_encode_labels:
+    cmd: python src/data/one_hot_encode_labels.py
+    deps:
+      - src/data/one_hot_encode_labels.py
+      - data/processed/Y_train.npy
+      - data/processed/Y_test.npy
+    outs:
+      - data/processed/y_train_one_hot.npy
+      - data/processed/y_test_one_hot.npy
