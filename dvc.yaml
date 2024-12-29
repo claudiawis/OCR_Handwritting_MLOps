@@ -42,3 +42,14 @@ stages:
     outs:
       - data/processed/features.npy
       - data/processed/labels.npy
+  split_data:
+    cmd: python src/data/split_data.py
+    deps:
+      - src/data/split_data.py
+      - data/processed/features.npy
+      - data/processed/labels.npy
+    outs:
+      - data/processed/X_train.npy
+      - data/processed/X_test.npy
+      - data/processed/Y_train.npy
+      - data/processed/Y_test.npy
