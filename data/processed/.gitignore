@@ -3,3 +3,9 @@
 /encoded_data.csv
 /features.npy
 /labels.npy
+/X_train.npy
+/X_test.npy
+/Y_train.npy
+/Y_test.npy
+/X_train_reshaped.npy
+/X_test_reshaped.npy
