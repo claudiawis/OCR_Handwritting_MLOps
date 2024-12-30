@@ -224,6 +224,14 @@ stages:
   build_model:
     cmd: python src/models/build_cnn.py
     deps:
+    - path: data/processed/X_train_reshaped.npy
+      hash: md5
+      md5: 2c6ae84e0e026bfe54b877e8cb2a4346
+      size: 13441024
+    - path: data/processed/y_train_one_hot.npy
+      hash: md5
+      md5: 6cf2f518a87f932cd7df4f9b6270ab63
+      size: 343008
     - path: src/models/build_cnn.py
       hash: md5
       md5: 4a9355a1dd2c94d052babb98b825d6ee

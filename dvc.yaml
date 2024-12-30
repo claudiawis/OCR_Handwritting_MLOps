@@ -97,5 +97,7 @@ stages:
     cmd: python src/models/build_cnn.py
     deps:
       - src/models/build_cnn.py
+      - data/processed/X_train_reshaped.npy
+      - data/processed/y_train_one_hot.npy
     outs:
       - models/model_architecture_summary.txt
