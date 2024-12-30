@@ -93,3 +93,9 @@ stages:
     cmd: python src/models/setup_callbacks.py
     deps:
       - src/models/setup_callbacks.py
+  build_model:
+    cmd: python src/models/build_cnn.py
+    deps:
+      - src/models/build_cnn.py
+    outs:
+      - models/model_architecture_summary.txt
