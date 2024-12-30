@@ -214,3 +214,10 @@ stages:
       hash: md5
       md5: 6cf2f518a87f932cd7df4f9b6270ab63
       size: 343008
+  setup_callbacks:
+    cmd: python src/models/setup_callbacks.py
+    deps:
+    - path: src/models/setup_callbacks.py
+      hash: md5
+      md5: ea60d5ece278861d8817fac590619d05
+      size: 1075

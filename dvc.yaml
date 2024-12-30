@@ -78,3 +78,18 @@ stages:
     outs:
       - data/processed/y_train_one_hot.npy
       - data/processed/y_test_one_hot.npy
+#  data_augmentation:
+#    cmd: python src/data/data_augmentation.py
+#    deps:
+#      - src/data/data_augmentation.py
+#      - data/processed/X_train.npy
+#      - data/processed/y_train_one_hot.npy
+#      - data/processed/X_test.npy
+#      - data/processed/y_test_one_hot.npy
+#    outs:
+#      - data/processed/train_augmented.npy
+#      - data/processed/test_augmented.npy
+  setup_callbacks:
+    cmd: python src/models/setup_callbacks.py
+    deps:
+      - src/models/setup_callbacks.py
