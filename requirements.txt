@@ -1,6 +1,6 @@
 # Data Handling
 pandas==2.2.3
-numpy==2.0.2
+numpy<2
 tqdm==4.67.0
 nltk==3.9.1
 
