@@ -119,7 +119,7 @@ stages:
       - models/CNN.h5
       - data/processed/X_test_reshaped.npy
       - data/processed/y_test_one_hot.npy
-    outs:
+    metrics:
       - metrics/classification_report.csv
       - metrics/confusion_matrix.csv
     plots:
