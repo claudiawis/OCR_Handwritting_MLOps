@@ -22,3 +22,6 @@ cryptography>=38.0.4,<45.0.0
 dvc==3.58.0
 dvc-http==2.32.0
 dagshub<0.4.0
+
+#Plotting
+matplotlib
