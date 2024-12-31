@@ -281,3 +281,35 @@ stages:
       hash: md5
       md5: 624bf8cd61ed0246203b2d7762e1aaf7
       size: 3308
+  evaluate_model:
+    cmd: python src/models/evaluate_model.py
+    deps:
+    - path: data/processed/X_test_reshaped.npy
+      hash: md5
+      md5: 5247bf374d82c3e827e2d59d34619d0c
+      size: 3361920
+    - path: data/processed/y_test_one_hot.npy
+      hash: md5
+      md5: 34c27a2341b30ad021aa5d5da2c3456c
+      size: 85888
+    - path: models/CNN.h5
+      hash: md5
+      md5: a97a312ef5cdd96d7cef2b0b5b4ef371
+      size: 7153408
+    - path: src/models/evaluate_model.py
+      hash: md5
+      md5: cafba2c7f8507a4f94af4879899294f3
+      size: 1282
+    outs:
+    - path: metrics/classification_report.csv
+      hash: md5
+      md5: d0980501bf470845cfd30da39d0e8925
+      size: 1263
+    - path: metrics/confusion_matrix.csv
+      hash: md5
+      md5: 8da0e817581887252eaab29d31b66886
+      size: 10020
+    - path: metrics/confusion_matrix.png
+      hash: md5
+      md5: 7b41b4983704cc0e596c7734cf44190d
+      size: 51057

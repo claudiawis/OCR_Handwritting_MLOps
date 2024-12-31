@@ -124,13 +124,13 @@ This command will download the dataset files specified in your DVC configuration
 
     python src/models/setup_callbacks.py
 
-### 15. Building the Convolutional Neural Network (CNN)
+### 15. Build, Training, and Save the CNN Model
 
-    python src/models/build_cnn.py
+    python src/models/build_train_cnn.py
 
-### 16. Training and Saving the CNN Model
+### 16. Evaluation of the CNN Model
 
-    python src/models/train_model.py
+    python src/models/evaluation_model.py
 
 ---
 

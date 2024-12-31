@@ -1,2 +1,5 @@
 /training_history.csv
 /training_accuracy.png
+/classification_report.csv
+/confusion_matrix.csv
+/confusion_matrix.png
