@@ -37,47 +37,47 @@ stages:
   prepare_features:
     cmd: python src/data/prepare_features.py
     deps:
-      - src/data/prepare_features.py
-      - data/processed/encoded_data.csv
+    - src/data/prepare_features.py
+    - data/processed/encoded_data.csv
     outs:
-      - data/processed/features.npy
-      - data/processed/labels.npy
+    - data/processed/features.npy
+    - data/processed/labels.npy
   split_data:
     cmd: python src/data/split_data.py
     deps:
-      - src/data/split_data.py
-      - data/processed/features.npy
-      - data/processed/labels.npy
+    - src/data/split_data.py
+    - data/processed/features.npy
+    - data/processed/labels.npy
     outs:
-      - data/processed/X_train.npy
-      - data/processed/X_test.npy
-      - data/processed/Y_train.npy
-      - data/processed/Y_test.npy
+    - data/processed/X_train.npy
+    - data/processed/X_test.npy
+    - data/processed/Y_train.npy
+    - data/processed/Y_test.npy
   reshape_data:
     cmd: python src/data/reshape_data.py
     deps:
-      - src/data/reshape_data.py
-      - data/processed/X_train.npy
-      - data/processed/X_test.npy
+    - src/data/reshape_data.py
+    - data/processed/X_train.npy
+    - data/processed/X_test.npy
     outs:
-      - data/processed/X_train_reshaped.npy
-      - data/processed/X_test_reshaped.npy
+    - data/processed/X_train_reshaped.npy
+    - data/processed/X_test_reshaped.npy
   calculate_class_weights:
     cmd: python src/data/calculate_class_weights.py
     deps:
-      - src/data/calculate_class_weights.py
-      - data/processed/Y_train.npy
+    - src/data/calculate_class_weights.py
+    - data/processed/Y_train.npy
     outs:
-      - data/processed/class_weights.npy
+    - data/processed/class_weights.npy
   one_hot_encode_labels:
     cmd: python src/data/one_hot_encode_labels.py
     deps:
-      - src/data/one_hot_encode_labels.py
-      - data/processed/Y_train.npy
-      - data/processed/Y_test.npy
+    - src/data/one_hot_encode_labels.py
+    - data/processed/Y_train.npy
+    - data/processed/Y_test.npy
     outs:
-      - data/processed/y_train_one_hot.npy
-      - data/processed/y_test_one_hot.npy
+    - data/processed/y_train_one_hot.npy
+    - data/processed/y_test_one_hot.npy
 #  data_augmentation:
 #    cmd: python src/data/data_augmentation.py
 #    deps:
@@ -93,11 +93,34 @@ stages:
     cmd: python src/models/setup_callbacks.py
     deps:
       - src/models/setup_callbacks.py
-  build_model:
-    cmd: python src/models/build_cnn.py
+    outs:
+      - models/callbacks.keras
+  build_train_cnn:
+    cmd: python src/models/build_train_cnn.py
     deps:
-      - src/models/build_cnn.py
+      - src/models/build_train_cnn.py
+      - models/callbacks.keras
       - data/processed/X_train_reshaped.npy
       - data/processed/y_train_one_hot.npy
+      - data/processed/X_test_reshaped.npy
+      - data/processed/y_test_one_hot.npy
+      - data/processed/class_weights.npy
     outs:
+      - models/CNN.h5
       - models/model_architecture_summary.txt
+    metrics:
+      - metrics/training_history.csv
+    plots:
+      - metrics/training_accuracy.png
+
+#  evaluate_model:
+#    cmd: python src/models/evaluate_model.py
+#    deps:
+#      - src/models/evaluate_model.py
+#      - models/CNN.h5
+#      - data/processed/X_test_reshaped.npy
+#      - data/processed/y_test_one_hot.npy
+#    outs:
+#      - metrics/classification_report.csv
+#      - metrics/confusion_matrix.csv
+#      - metrics/confusion_matrix.png

@@ -127,6 +127,11 @@ This command will download the dataset files specified in your DVC configuration
 ### 15. Building the Convolutional Neural Network (CNN)
 
     python src/models/build_cnn.py
+
+### 16. Training and Saving the CNN Model
+
+    python src/models/train_model.py
+
 ---
 
 Following these steps will set up your project environment correctly and ensure that all necessary dependencies and datasets are available for development and testing. If you encounter any issues, please refer to the troubleshooting section or contact the project maintainers for assistance.

@@ -219,24 +219,64 @@ stages:
     deps:
     - path: src/models/setup_callbacks.py
       hash: md5
-      md5: ea60d5ece278861d8817fac590619d05
-      size: 1075
+      md5: cbd62b9d478468d9b5dd2b505d3a5657
+      size: 2020
+    outs:
+    - path: models/callbacks.keras
+      hash: md5
+      md5: d5b4a474134e3f6ffb93872da5628926
+      size: 605
   build_model:
     cmd: python src/models/build_cnn.py
     deps:
-    - path: data/processed/X_train_reshaped.npy
-      hash: md5
-      md5: 2c6ae84e0e026bfe54b877e8cb2a4346
-      size: 13441024
-    - path: data/processed/y_train_one_hot.npy
-      hash: md5
-      md5: 6cf2f518a87f932cd7df4f9b6270ab63
-      size: 343008
     - path: src/models/build_cnn.py
       hash: md5
       md5: 4a9355a1dd2c94d052babb98b825d6ee
       size: 2579
+  build_train_cnn:
+    cmd: python src/models/build_train_cnn.py
+    deps:
+    - path: data/processed/X_test_reshaped.npy
+      hash: md5
+      md5: 5247bf374d82c3e827e2d59d34619d0c
+      size: 3361920
+    - path: data/processed/X_train_reshaped.npy
+      hash: md5
+      md5: 2c6ae84e0e026bfe54b877e8cb2a4346
+      size: 13441024
+    - path: data/processed/class_weights.npy
+      hash: md5
+      md5: 7d7c997e88b8f20c73f74ee61e53cc2b
+      size: 744
+    - path: data/processed/y_test_one_hot.npy
+      hash: md5
+      md5: 34c27a2341b30ad021aa5d5da2c3456c
+      size: 85888
+    - path: data/processed/y_train_one_hot.npy
+      hash: md5
+      md5: 6cf2f518a87f932cd7df4f9b6270ab63
+      size: 343008
+    - path: models/callbacks.keras
+      hash: md5
+      md5: d5b4a474134e3f6ffb93872da5628926
+      size: 605
+    - path: src/models/build_train_cnn.py
+      hash: md5
+      md5: 606e08b827f31a1852f9a2b82b3fce8e
+      size: 3886
     outs:
+    - path: metrics/training_accuracy.png
+      hash: md5
+      md5: a153daca11512c8be38ac8ec0a92b872
+      size: 41683
+    - path: metrics/training_history.csv
+      hash: md5
+      md5: 3dcb7eee0c6f8f8f605d0ca73eef546f
+      size: 3723
+    - path: models/CNN.h5
+      hash: md5
+      md5: a97a312ef5cdd96d7cef2b0b5b4ef371
+      size: 7153408
     - path: models/model_architecture_summary.txt
       hash: md5
       md5: 624bf8cd61ed0246203b2d7762e1aaf7
