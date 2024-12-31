@@ -14,17 +14,17 @@ stages:
     outs:
     - path: data/raw/raw_data/data
       hash: md5
-      md5: 7a1bc51668ef88b5b4f4c26768b8e38b.dir
-      size: 4673866974
-      nfiles: 439354
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0
   load_dataset:
     cmd: python src/data/load_dataset.py
     deps:
     - path: data/raw/raw_data/data
       hash: md5
-      md5: 7a1bc51668ef88b5b4f4c26768b8e38b.dir
-      size: 4673866974
-      nfiles: 439354
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0
     - path: src/data/load_dataset.py
       hash: md5
       md5: 7c66008b47c609208a36594415472518
