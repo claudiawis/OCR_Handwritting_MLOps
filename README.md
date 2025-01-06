@@ -55,7 +55,7 @@ pip install -r requirements.txt
 
 Before pulling the dataset, you need to configure DVC to connect to the remote storage. Follow these steps:
 
-#### a. Add Remote Storage
+#### Add Remote Storage
 
 Add the DVC remote storage by running the command below.
 
@@ -70,7 +70,7 @@ Set the default remote and check its status:
     dvc remote default origin
     dvc remote default
 
-#### b. Configure Authentication
+#### Configure Authentication
 
 Set DVC remote storage authentication using the following commands. Replace `<your_username>` and `<your_token>` with your actual DagsHub username and API token:
 
@@ -88,7 +88,7 @@ With DVC configured, you can now pull the dataset from the remote storage. Execu
 
 This command will download the dataset files specified in your DVC configuration.
 
-### Dataset Preparation
+### 6. Dataset Preparation
 
 This section outlines the steps required to prepare the dataset for model training.
 
@@ -154,7 +154,7 @@ Applies one-hot encoding to the target labels to prepare them for multi-class cl
 
     python src/data/one_hot_encode_labels.py
 
-### Model Building, Training, and Testing
+### 7. Model Building, Training, and Testing
 
 #### 1. Set Up Callbacks for Training
 
