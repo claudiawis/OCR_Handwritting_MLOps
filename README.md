@@ -92,43 +92,43 @@ This command will download the dataset files specified in your DVC configuration
 
 This section outlines the steps required to prepare the dataset for model training.
 
-## 1. Extract Raw Data
+#### 1. Extract Raw Data
 
 Extracts the raw data from the source and saves it in a suitable format for further processing.
 
     python src/data/extract_raw_data.py 
 
-## 2. Load Dataset
+#### 2. Load Dataset
 
 Loads the extracted dataset into memory for processing.
 
     python src/data/load_dataset.py 
 
-## 3. Filter Dataset
+#### 3. Filter Dataset
 
 Applies filters to the dataset to remove unnecessary or irrelevant information.
 
     python src/data/filter_data.py
 
-## 4. Clean Dataset
+#### 4. Clean Dataset
 
 Cleans the dataset by handling missing values, removing duplicates, and correcting inconsistencies.
 
     python src/data/clean_data.py
 
-## 5. Encode Dataset
+#### 5. Encode Dataset
 
 Encodes categorical features into numerical format to prepare them for model training.
 
     python src/data/encode_data.py
 
-## 6. Prepare Input Features and Labels
+#### 6. Prepare Input Features and Labels
 
 Prepares the input features and target labels for model training.
 
     python src/data/prepare_features.py 
 
-## 7. Split the Data into Training and Testing Sets
+#### 7. Split the Data into Training and Testing Sets
 
 Divides the dataset into training and testing sets to evaluate model performance.
 
@@ -136,19 +136,19 @@ Divides the dataset into training and testing sets to evaluate model performance
 
 This section describes the steps involved in building, training, and evaluating the model.
 
-## 8. Reshape Data for CNN Input
+#### 8. Reshape Data for CNN Input
 
 Reshapes the dataset to fit the input requirements of the Convolutional Neural Network (CNN).
 
     python src/data/reshape_data.py
 
-## 9. Calculate Class Weights for Imbalance
+#### 9. Calculate Class Weights for Imbalance
 
 Calculates class weights to address potential class imbalance in the dataset.
 
     python src/data/calculate_class_weights.py
 
-## 10. One-Hot Encode Labels
+#### 10. One-Hot Encode Labels
 
 Applies one-hot encoding to the target labels to prepare them for multi-class classification.
 
@@ -156,19 +156,19 @@ Applies one-hot encoding to the target labels to prepare them for multi-class cl
 
 ### Model Building, Training, and Testing
 
-## 1. Set Up Callbacks for Training
+#### 1. Set Up Callbacks for Training
 
-Configures '''early stopping''' and '''model checkpoint''' callbacks to optimize training.
+Configures `early stopping` and `model checkpoint` callbacks to optimize training.
 
     python src/models/setup_callbacks.py
 
-## 2. Build, Train, and Save the CNN Model
+#### 2. Build, Train, and Save the CNN Model
 
 Constructs the CNN architecture, trains the model on the training data, and saves the trained model.
 
     python src/models/build_train_cnn.py
 
-## 3. Evaluation of the CNN Model
+#### 3. Evaluation of the CNN Model
 
 Evaluates the performance of the trained CNN model on the test dataset.
 
