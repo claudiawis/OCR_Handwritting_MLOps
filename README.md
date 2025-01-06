@@ -174,6 +174,19 @@ Evaluates the performance of the trained CNN model on the test dataset.
 
     python src/models/evaluate_model.py
 
+### 9. Use the FastAPI Inference API
+
+After training your model, you can deploy an inference API using **FastAPI**. This API allows users to upload images of handwritten words and get predictions.
+
+#### 1. Running the FastAPI App
+
+The FastAPI application is located in the `app.py` file. You can run the API server using **Uvicorn**, a lightweight ASGI server:
+
+    python uvicorn app:app --reload
+
+Then open your browser at http://localhost:8000/docs to access the FastAPI interactive docs.
+
+
 ---
 
 Following these steps will set up your project environment correctly and ensure that all necessary dependencies and datasets are available for development and testing. If you encounter any issues, please refer to the troubleshooting section or contact the project maintainers for assistance.
