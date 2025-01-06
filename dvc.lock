@@ -9,8 +9,8 @@ stages:
       size: 4252862892
     - path: src/data/extract_raw_data.py
       hash: md5
-      md5: f08028231da32e4f4e2b4fbf41cc90ca
-      size: 1723
+      md5: 8b405ae455a6cf91fa28878355e2b868
+      size: 1688
     outs:
     - path: data/raw/raw_data/data
       hash: md5
@@ -27,13 +27,13 @@ stages:
       nfiles: 0
     - path: src/data/load_dataset.py
       hash: md5
-      md5: 7c66008b47c609208a36594415472518
-      size: 2731
+      md5: 72955aeb370da1768684df23db3a04f6
+      size: 2672
     outs:
     - path: data/raw/words.csv
       hash: md5
-      md5: 01f562cef485e6f76c5ec55c41e136fc
-      size: 12753704
+      md5: 83aacd67b31e17cb7264483a602c800c
+      size: 12638385
   load_data:
     cmd: python src/data/filter_data.py
     deps:
@@ -55,60 +55,60 @@ stages:
     deps:
     - path: data/raw/words.csv
       hash: md5
-      md5: 01f562cef485e6f76c5ec55c41e136fc
-      size: 12753704
+      md5: 83aacd67b31e17cb7264483a602c800c
+      size: 12638385
     - path: src/data/filter_data.py
       hash: md5
-      md5: 45b6d1068281f8acf8e2255a5ad6c53d
-      size: 1936
+      md5: 82403f3311c11dabba9972a7195f351d
+      size: 1900
     outs:
     - path: data/processed/filtered_data.csv
       hash: md5
-      md5: 10f4a07002ea79385e06e7f6c5a7492b
-      size: 725765
+      md5: 2dc75802f376758c9f8ff593fae2709a
+      size: 719143
   clean_data:
     cmd: python src/data/clean_data.py
     deps:
     - path: data/processed/filtered_data.csv
       hash: md5
-      md5: 10f4a07002ea79385e06e7f6c5a7492b
-      size: 725765
+      md5: 2dc75802f376758c9f8ff593fae2709a
+      size: 719143
     - path: src/data/clean_data.py
       hash: md5
-      md5: ffab648993b4aef7899b36c90290e13d
-      size: 2369
+      md5: df61322ccd53ebd10c4beefd61e68c80
+      size: 2323
     outs:
     - path: data/processed/cleaned_data.csv
       hash: md5
-      md5: f2a594b72407cbab7a4d13ee8e922e76
-      size: 294060
+      md5: 0f40a569b05eeaac6bf144b3d9ab7a83
+      size: 291380
   encode_data:
     cmd: python src/data/encode_data.py
     deps:
     - path: data/processed/cleaned_data.csv
       hash: md5
-      md5: f2a594b72407cbab7a4d13ee8e922e76
-      size: 294060
+      md5: 0f40a569b05eeaac6bf144b3d9ab7a83
+      size: 291380
     - path: src/data/encode_data.py
       hash: md5
-      md5: 79b4a8b51e4d72a20bc4e78656a340ce
-      size: 1051
+      md5: a0518bbfe907e4139ea6d772815a0573
+      size: 1023
     outs:
     - path: data/processed/encoded_data.csv
       hash: md5
-      md5: ff9b703e84a491e836c28f513ab6cb20
-      size: 300726
+      md5: 5c1b3f7d225bdad4fb25552837395833
+      size: 298046
   prepare_features:
     cmd: python src/data/prepare_features.py
     deps:
     - path: data/processed/encoded_data.csv
       hash: md5
-      md5: ff9b703e84a491e836c28f513ab6cb20
-      size: 300726
+      md5: 5c1b3f7d225bdad4fb25552837395833
+      size: 298046
     - path: src/data/prepare_features.py
       hash: md5
-      md5: 096ee179cb93164961edcd05b63fdbf3
-      size: 2121
+      md5: c107930be6365c53a5d56c56e07f63de
+      size: 2068
     outs:
     - path: data/processed/features.npy
       hash: md5
@@ -131,8 +131,8 @@ stages:
       size: 21560
     - path: src/data/split_data.py
       hash: md5
-      md5: bbc9e0eb68a55e4fddedc96e20c9c54b
-      size: 977
+      md5: 16b42890c754490f415c98e06506a082
+      size: 951
     outs:
     - path: data/processed/X_test.npy
       hash: md5
@@ -163,8 +163,8 @@ stages:
       size: 13441024
     - path: src/data/reshape_data.py
       hash: md5
-      md5: ec32f23188d69f0db63734e9e932ab42
-      size: 1237
+      md5: bfa956cf133dd82cb532ac69953328ff
+      size: 1211
     outs:
     - path: data/processed/X_test_reshaped.npy
       hash: md5
@@ -183,13 +183,13 @@ stages:
       size: 17272
     - path: src/data/calculate_class_weights.py
       hash: md5
-      md5: 52abce1c513420a48d53aefc93565582
-      size: 1214
+      md5: 1b602f3971180dc2093d36a569f754d4
+      size: 1184
     outs:
     - path: data/processed/class_weights.npy
       hash: md5
-      md5: 7d7c997e88b8f20c73f74ee61e53cc2b
-      size: 744
+      md5: 7adeed5e291a93a080164810c0dfb1d6
+      size: 839
   one_hot_encode_labels:
     cmd: python src/data/one_hot_encode_labels.py
     deps:
@@ -203,8 +203,8 @@ stages:
       size: 17272
     - path: src/data/one_hot_encode_labels.py
       hash: md5
-      md5: 466bcc8a10e7462768b2b487cb579a87
-      size: 1492
+      md5: eb0a8c3064cba157b1c2879c2b3912ee
+      size: 1460
     outs:
     - path: data/processed/y_test_one_hot.npy
       hash: md5
@@ -219,8 +219,8 @@ stages:
     deps:
     - path: src/models/setup_callbacks.py
       hash: md5
-      md5: cbd62b9d478468d9b5dd2b505d3a5657
-      size: 2020
+      md5: da89d922df3e88acbfb9343d50833729
+      size: 1966
     outs:
     - path: models/callbacks.keras
       hash: md5
@@ -246,8 +246,8 @@ stages:
       size: 13441024
     - path: data/processed/class_weights.npy
       hash: md5
-      md5: 7d7c997e88b8f20c73f74ee61e53cc2b
-      size: 744
+      md5: 7adeed5e291a93a080164810c0dfb1d6
+      size: 839
     - path: data/processed/y_test_one_hot.npy
       hash: md5
       md5: 34c27a2341b30ad021aa5d5da2c3456c
@@ -262,25 +262,25 @@ stages:
       size: 605
     - path: src/models/build_train_cnn.py
       hash: md5
-      md5: 606e08b827f31a1852f9a2b82b3fce8e
-      size: 3886
+      md5: ebd7d11b95236f48669f53cc48bfc333
+      size: 3771
     outs:
     - path: metrics/training_accuracy.png
       hash: md5
-      md5: a153daca11512c8be38ac8ec0a92b872
-      size: 41683
+      md5: f399348ccb75edb268f0af4f50beaa7a
+      size: 39431
     - path: metrics/training_history.csv
       hash: md5
-      md5: 3dcb7eee0c6f8f8f605d0ca73eef546f
-      size: 3723
+      md5: 6735de726886ef9592186c4c42cf76af
+      size: 3564
     - path: models/CNN.h5
       hash: md5
-      md5: a97a312ef5cdd96d7cef2b0b5b4ef371
+      md5: 279076fa84ef35e1b03cf17fe66e4bde
       size: 7153408
     - path: models/model_architecture_summary.txt
       hash: md5
-      md5: 624bf8cd61ed0246203b2d7762e1aaf7
-      size: 3308
+      md5: b66bd92d56a45eb92d74ff1cddb1b056
+      size: 2627
   evaluate_model:
     cmd: python src/models/evaluate_model.py
     deps:
@@ -294,22 +294,22 @@ stages:
       size: 85888
     - path: models/CNN.h5
       hash: md5
-      md5: a97a312ef5cdd96d7cef2b0b5b4ef371
+      md5: 279076fa84ef35e1b03cf17fe66e4bde
       size: 7153408
     - path: src/models/evaluate_model.py
       hash: md5
-      md5: cafba2c7f8507a4f94af4879899294f3
-      size: 1282
+      md5: 8b9811064e2d2ed3f94ecf58bde150a9
+      size: 1247
     outs:
     - path: metrics/classification_report.csv
       hash: md5
-      md5: d0980501bf470845cfd30da39d0e8925
-      size: 1263
+      md5: 14e3e436289ac3bf9e6caea2d329f94b
+      size: 1345
     - path: metrics/confusion_matrix.csv
       hash: md5
-      md5: 8da0e817581887252eaab29d31b66886
-      size: 10020
+      md5: b881502e0d736d35a4487713ad98c9be
+      size: 10000
     - path: metrics/confusion_matrix.png
       hash: md5
-      md5: 7b41b4983704cc0e596c7734cf44190d
-      size: 51057
+      md5: e8ce79cf4e4aeafb84c4dec6f32d251c
+      size: 51211
