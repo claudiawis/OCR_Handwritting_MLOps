@@ -3,14 +3,29 @@ from fastapi.responses import JSONResponse
 from tensorflow.keras.models import load_model
 from PIL import Image
 import numpy as np
+import requests
+import os
 
 # Initialize FastAPI app
 app = FastAPI()
 
+# Remote model URL (update with your DagsHub link)
+MODEL_URL = "https://dagshub.com/KazemZh/OCR_Handwritting_MLOps/raw/main/models/CNN.h5"
+
+# Function to download the model from the repository if not already present locally
+def download_model():
+    response = requests.get(MODEL_URL)
+    with open("models/CNN.h5", "wb") as f:
+        f.write(response.content)
+    print("✅ Model downloaded successfully.")
+
+# Download the model
+download_model()
+
 # Load the trained model
 model = load_model("models/CNN.h5")
 
-# Define the class labels (modify according to your dataset)
+# Define the class labels
 class_labels = ['A', 'made', 'may', 'two', 'We', 'But', 'told', 'And', 'new', 'This', 'first', 'people', 'In', 'much', 'could', 'time', 'man', 'like', 'well', 'You']
 
 # Image preprocessing function
