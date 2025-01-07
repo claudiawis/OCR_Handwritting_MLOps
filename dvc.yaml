@@ -92,35 +92,6 @@ stages:
   setup_callbacks:
     cmd: python src/models/setup_callbacks.py
     deps:
-      - src/models/setup_callbacks.py
+    - src/models/setup_callbacks.py
     outs:
-      - models/callbacks.keras
-  build_train_cnn:
-    cmd: python src/models/build_train_cnn.py
-    deps:
-      - src/models/build_train_cnn.py
-      - models/callbacks.keras
-      - data/processed/X_train_reshaped.npy
-      - data/processed/y_train_one_hot.npy
-      - data/processed/X_test_reshaped.npy
-      - data/processed/y_test_one_hot.npy
-      - data/processed/class_weights.npy
-    outs:
-      - models/CNN.h5
-      - models/model_architecture_summary.txt
-    metrics:
-      - metrics/training_history.csv
-    plots:
-      - metrics/training_accuracy.png
-  evaluate_model:
-    cmd: python src/models/evaluate_model.py
-    deps:
-      - src/models/evaluate_model.py
-      - models/CNN.h5
-      - data/processed/X_test_reshaped.npy
-      - data/processed/y_test_one_hot.npy
-    metrics:
-      - metrics/classification_report.csv
-      - metrics/confusion_matrix.csv
-    plots:
-      - metrics/confusion_matrix.png
+    - models/callbacks.keras

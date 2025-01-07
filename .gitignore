@@ -25,3 +25,4 @@ venv
 # Ignore IDE specific files (e.g., VS Code, PyCharm)
 .vscode/
 .idea/
+/metrics
