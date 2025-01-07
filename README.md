@@ -55,7 +55,7 @@ pip install -r requirements.txt
 
 Before pulling the dataset, you need to configure DVC to connect to the remote storage. Follow these steps:
 
-#### a. Add Remote Storage
+#### Add Remote Storage
 
 Add the DVC remote storage by running the command below.
 
@@ -70,7 +70,7 @@ Set the default remote and check its status:
     dvc remote default origin
     dvc remote default
 
-#### b. Configure Authentication
+#### Configure Authentication
 
 Set DVC remote storage authentication using the following commands. Replace `<your_username>` and `<your_token>` with your actual DagsHub username and API token:
 
@@ -88,49 +88,102 @@ With DVC configured, you can now pull the dataset from the remote storage. Execu
 
 This command will download the dataset files specified in your DVC configuration.
 
-### 6. Extract the Dataset
+### 6. Dataset Preparation
+
+This section outlines the steps required to prepare the dataset for model training.
+
+#### 1. Extract Raw Data
+
+Extracts the raw data from the source and saves it in a suitable format for further processing.
 
     python src/data/extract_raw_data.py 
 
-### 7. Load the dataset
+#### 2. Load Dataset
+
+Loads the extracted dataset into memory for processing.
 
     python src/data/load_dataset.py 
 
-### 8. Preparing Input Features and Labels
+#### 3. Filter Dataset
 
-    python src/data/prepare_feature.py 
+Applies filters to the dataset to remove unnecessary or irrelevant information.
 
-### 9. Splitting the Data into Training and Testing Sets
+    python src/data/filter_data.py
+
+#### 4. Clean Dataset
+
+Cleans the dataset by handling missing values, removing duplicates, and correcting inconsistencies.
+
+    python src/data/clean_data.py
+
+#### 5. Encode Dataset
+
+Encodes categorical features into numerical format to prepare them for model training.
+
+    python src/data/encode_data.py
+
+#### 6. Prepare Input Features and Labels
+
+Prepares the input features and target labels for model training.
+
+    python src/data/prepare_features.py 
+
+#### 7. Split the Data into Training and Testing Sets
+
+Divides the dataset into training and testing sets to evaluate model performance.
 
     python src/data/split_data.py 
 
-### 10. Reshaping Data for CNN Input
+This section describes the steps involved in building, training, and evaluating the model.
+
+#### 8. Reshape Data for CNN Input
+
+Reshapes the dataset to fit the input requirements of the Convolutional Neural Network (CNN).
 
     python src/data/reshape_data.py
 
-### 11. Calculating Class Weights to Handle Class Imbalance
+#### 9. Calculate Class Weights for Imbalance
+
+Calculates class weights to address potential class imbalance in the dataset.
 
     python src/data/calculate_class_weights.py
 
-### 12. One-Hot Encoding Labels
+#### 10. One-Hot Encode Labels
+
+Applies one-hot encoding to the target labels to prepare them for multi-class classification.
 
     python src/data/one_hot_encode_labels.py
 
-### 13. Data Augmentation with ImageDataGenerator
+### 7. Model Building, Training, and Testing
 
-    python src/data/data_augmentation.py
+#### 1. Set Up Callbacks for Training
 
-### 14. Setting Up Early Stopping and Model Checkpoint Callbacks
+Configures `early stopping` and `model checkpoint` callbacks to optimize training.
 
     python src/models/setup_callbacks.py
 
-### 15. Build, Training, and Save the CNN Model
+#### 2. Build, Train, and Save the CNN Model
+
+Constructs the CNN architecture, trains the model on the training data, and saves the trained model.
 
     python src/models/build_train_cnn.py
 
-### 16. Evaluation of the CNN Model
+#### 3. Evaluation of the CNN Model
 
-    python src/models/evaluation_model.py
+Evaluates the performance of the trained CNN model on the test dataset.
+
+    python src/models/evaluate_model.py
+
+### 8. Use the FastAPI Inference API
+
+After training your model, you can deploy an inference API using **FastAPI**. This API allows users to upload images of handwritten words and get predictions.
+
+The FastAPI application is located in the `src/app/app.py` file. You can run the API server using **uvicorn**, a lightweight ASGI server. Use the following command from the main directory:
+
+    uvicorn src.app.app:app --reload
+
+Then open your browser at http://localhost:8000/docs to access the FastAPI interactive docs.
+
 
 ---
 

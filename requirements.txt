@@ -26,3 +26,10 @@ dagshub<0.4.0
 #Plotting
 matplotlib
 seaborn
+
+# Web API Framework
+fastapi==0.100.0  # For building the FastAPI app
+uvicorn==0.23.0  # ASGI server for running the FastAPI app
+
+# For handling file uploads
+python-multipart==0.0.6
