@@ -33,3 +33,6 @@ uvicorn==0.23.0  # ASGI server for running the FastAPI app
 
 # For handling file uploads
 python-multipart==0.0.6
+
+# For reading models directly from the repository
+requests==2.31.0
