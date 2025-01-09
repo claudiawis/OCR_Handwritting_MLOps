@@ -26,3 +26,6 @@ venv
 .vscode/
 .idea/
 /metrics
+
+models/CNN.h5
+models/model_architecture_summary.txt
