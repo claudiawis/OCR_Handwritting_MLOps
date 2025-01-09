@@ -187,4 +187,19 @@ Then open your browser at http://localhost:8000/docs to access the FastAPI inter
 
 ---
 
+## Dockerfiles
+
+### Dockerfile for ingestion step:
+
+Make sure that your Docker Daemon (engine) is not running, for , on Windows, Docker relies on Docker Desktop to run the Docker Daemon. So make sure it is already lunched by opening it.
+Build the Docker image by running the following command from the root directory:
+
+    docker build -t ingestion_image -f src/data/Dockerfile .
+Then run the Docker container with the volume containing the raw data:
+
+    docker run -v "$(pwd)/data/raw:/app/data/raw" -v "$(pwd)/.dvc:/app/.dvc" -v "$(pwd)/.git:/app/.git" ingestion_image
+
+---
+
+
 Following these steps will set up your project environment correctly and ensure that all necessary dependencies and datasets are available for development and testing. If you encounter any issues, please refer to the troubleshooting section or contact the project maintainers for assistance.
