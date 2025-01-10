@@ -233,3 +233,83 @@ stages:
       hash: md5
       md5: 4a9355a1dd2c94d052babb98b825d6ee
       size: 2579
+  build_train_cnn:
+    cmd: python src/models/build_train_cnn.py
+    deps:
+    - path: data/processed/X_test_reshaped.npy
+      hash: md5
+      md5: 5247bf374d82c3e827e2d59d34619d0c
+      size: 3361920
+    - path: data/processed/X_train_reshaped.npy
+      hash: md5
+      md5: 2c6ae84e0e026bfe54b877e8cb2a4346
+      size: 13441024
+    - path: data/processed/class_weights.npy
+      hash: md5
+      md5: 7adeed5e291a93a080164810c0dfb1d6
+      size: 839
+    - path: data/processed/y_test_one_hot.npy
+      hash: md5
+      md5: 34c27a2341b30ad021aa5d5da2c3456c
+      size: 85888
+    - path: data/processed/y_train_one_hot.npy
+      hash: md5
+      md5: 6cf2f518a87f932cd7df4f9b6270ab63
+      size: 343008
+    - path: models/callbacks.keras
+      hash: md5
+      md5: d5b4a474134e3f6ffb93872da5628926
+      size: 605
+    - path: src/models/build_train_cnn.py
+      hash: md5
+      md5: 606e08b827f31a1852f9a2b82b3fce8e
+      size: 3886
+    outs:
+    - path: metrics/training_accuracy.png
+      hash: md5
+      md5: b056fca976baf092eced2fcdd12b8c9d
+      size: 40935
+    - path: metrics/training_history.csv
+      hash: md5
+      md5: da1fe95d94d5b1265b8c32455c26cbea
+      size: 3397
+    - path: models/CNN.h5
+      hash: md5
+      md5: 047aa238fa19974669f9349f73c59cd2
+      size: 7153408
+    - path: models/model_architecture_summary.txt
+      hash: md5
+      md5: 624bf8cd61ed0246203b2d7762e1aaf7
+      size: 3308
+  evaluate_model:
+    cmd: python src/models/evaluate_model.py
+    deps:
+    - path: data/processed/X_test_reshaped.npy
+      hash: md5
+      md5: 5247bf374d82c3e827e2d59d34619d0c
+      size: 3361920
+    - path: data/processed/y_test_one_hot.npy
+      hash: md5
+      md5: 34c27a2341b30ad021aa5d5da2c3456c
+      size: 85888
+    - path: models/CNN.h5
+      hash: md5
+      md5: 047aa238fa19974669f9349f73c59cd2
+      size: 7153408
+    - path: src/models/evaluate_model.py
+      hash: md5
+      md5: cafba2c7f8507a4f94af4879899294f3
+      size: 1282
+    outs:
+    - path: metrics/classification_report.csv
+      hash: md5
+      md5: 78755d168209a4040ba97c79913567a2
+      size: 1303
+    - path: metrics/confusion_matrix.csv
+      hash: md5
+      md5: 4f9cc05e9fcdc976bb30f45d17964ced
+      size: 10020
+    - path: metrics/confusion_matrix.png
+      hash: md5
+      md5: 297811966d680d24dd5a92b9add89bc1
+      size: 51926
