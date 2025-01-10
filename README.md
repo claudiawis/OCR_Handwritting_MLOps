@@ -180,7 +180,7 @@ After training your model, you can deploy an inference API using **FastAPI**. Th
 
 The FastAPI application is located in the `src/api/api.py` file. You can run the API server using **uvicorn**, a lightweight ASGI server. Use the following command from the main directory:
 
-    uvicorn src.i.api:app --reload
+    uvicorn src.api.api:app --reload
 
 Then open your browser at http://localhost:8000/docs to access the FastAPI interactive docs.
 
@@ -206,8 +206,6 @@ Create the image for the training step from the root directory using the command
     docker build -t training_image -f src/models/Dockerfile .
 
 Then run the Docker container that include the required volumes:
-
-
 
     docker run -v "$(pwd)/data:/app/data" -v "$(pwd)/models:/app/models" -v "$(pwd)/.dvc:/app/.dvc" -v "$(pwd)/.git:/app/.git" training_image
 
