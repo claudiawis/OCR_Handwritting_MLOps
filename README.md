@@ -195,13 +195,14 @@ Make sure that your Docker Daemon (engine) is not running, for , on Windows, Doc
 Build the Docker image by running the following command from the root directory:
 
     docker build -t ingestion_image -f src/data/Dockerfile .
+
 Then run the Docker container with the volume containing the raw data:
 
     docker run -v "$(pwd)/data/raw:/app/data/raw" -v "$(pwd)/.dvc:/app/.dvc" -v "$(pwd)/.git:/app/.git" ingestion_image
 
 ### Dockerfile for training step:
 
-Create the image for the training step from the root directory using the command bellow:
+First, create the image for the training step from the root directory using the command bellow:
 
     docker build -t training_image -f src/models/Dockerfile .
 
@@ -209,6 +210,18 @@ Then run the Docker container that include the required volumes:
 
     docker run -v "$(pwd)/data:/app/data" -v "$(pwd)/models:/app/models" -v "$(pwd)/.dvc:/app/.dvc" -v "$(pwd)/.git:/app/.git" training_image
 
+### Dockerfile for prediction step:
+
+Create the image for the prediction step from the root directory using the command bellow:
+
+    docker build -t prediction_image -f src/api/Dockerfile .
+
+
+Run the Docker container with the command:
+
+    docker run -p 8000:8000 prediction_image
+
+Open your browser at http://localhost:8000/docs to access the FastAPI interactive docs.
 ---
 
 
