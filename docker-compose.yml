@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  ingestion:
+    build:
+      context: .
+      dockerfile: src/data/Dockerfile
+    container_name: ingestion_service
+    volumes:
+      - ./data/raw:/app/data/raw
+      - ./.dvc:/app/.dvc
+      - ./.git:/app/.git
+    command: ["dvc", "repro", "one_hot_encode_labels"]
+
+  training:
+    build:
+      context: .
+      dockerfile: src/models/Dockerfile
+    container_name: training_service
+    depends_on:
+      - ingestion
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./.dvc:/app/.dvc
+      - ./.git:/app/.git
+    command: ["sh", "-c", "dvc repro --downstream setup_callbacks"]
+
+  prediction:
+    build:
+      context: .
+      dockerfile: src/api/Dockerfile
+    container_name: prediction_service
+    depends_on:
+      - training
+    ports:
+      - "8000:8000"

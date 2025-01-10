@@ -222,6 +222,34 @@ Run the Docker container with the command:
     docker run -p 8000:8000 prediction_image
 
 Open your browser at http://localhost:8000/docs to access the FastAPI interactive docs.
+
+### Dockerfile orchestration:
+
+The docker-compose.yml file that will orchestrate your three services (ingestion, training, and prediction), with shared volumes and ports configured accordingly.
+
+Build all services:
+
+    docker-compose build
+
+Run all services:
+
+    docker-compose up
+
+Run services in detached mode (run the services in the background):
+
+    docker-compose up -d
+
+Check Logs for Each Service:
+
+    docker logs ingestion_service
+    docker logs training_service
+    docker logs prediction_service
+
+To stop the running services:
+
+    docker-compose down
+
+
 ---
 
 
