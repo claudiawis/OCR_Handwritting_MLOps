@@ -9,6 +9,10 @@ keras==3.7.0  # Keras is now part of TensorFlow but sometimes requires explicit 
 # Machine Learning Utilities
 scikit-learn==1.6.0
 
+#Plotting
+matplotlib
+seaborn
+
 # Cryptography for DVC
 cryptography>=38.0.4,<45.0.0
 
