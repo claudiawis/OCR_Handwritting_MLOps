@@ -199,6 +199,18 @@ Then run the Docker container with the volume containing the raw data:
 
     docker run -v "$(pwd)/data/raw:/app/data/raw" -v "$(pwd)/.dvc:/app/.dvc" -v "$(pwd)/.git:/app/.git" ingestion_image
 
+### Dockerfile for training step:
+
+Create the image for the training step from the root directory using the command bellow:
+
+    docker build -t training_image -f src/models/Dockerfile .
+
+Then run the Docker container that include the required volumes:
+
+
+
+    docker run -v "$(pwd)/data:/app/data" -v "$(pwd)/models:/app/models" -v "$(pwd)/.dvc:/app/.dvc" -v "$(pwd)/.git:/app/.git" training_image
+
 ---
 
 

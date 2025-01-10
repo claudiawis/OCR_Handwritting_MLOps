@@ -1,0 +1,18 @@
+# Data Handling
+pandas==2.2.3
+numpy<2
+
+# Deep Learning Frameworks
+tensorflow==2.18.0
+keras==3.7.0  # Keras is now part of TensorFlow but sometimes requires explicit inclusion
+
+# Machine Learning Utilities
+scikit-learn==1.6.0
+
+# Cryptography for DVC
+cryptography>=38.0.4,<45.0.0
+
+# DVC and DagsHub
+dvc==3.58.0
+dvc-http==2.32.0
+dagshub<0.4.0
