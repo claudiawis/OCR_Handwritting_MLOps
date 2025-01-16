@@ -9,6 +9,7 @@ data/predicted/*     # Ignore all files in the predicted data directory
 
 *.csv                     # Ignore all CSV files
 *.pkl                     # Ignore all pickle files
+*.pyc                     # Ignore all compiled Python files
 
 # Ignore Python virtual environments
 .venv/
