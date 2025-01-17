@@ -5,12 +5,17 @@ from PIL import Image
 import numpy as np
 import requests
 import os
+from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
 
 # Initialize FastAPI app
 app = FastAPI()
 
 # Remote model URL
 MODEL_URL = "https://dagshub.com/KazemZh/OCR_Handwritting_MLOps/raw/main/models/CNN.h5"
+
+# Prometheus counters
+prediction_requests = Counter('prediction_requests_total', 'Total number of prediction requests')
+prediction_errors = Counter('prediction_errors_total', 'Total number of prediction errors')
 
 # Function to download the model from the repository
 def download_model():
@@ -24,8 +29,9 @@ def download_model():
     else:
         raise Exception(f"❌ Failed to download model. Status code: {response.status_code}")
 
-# Download the model at every startup
-download_model()
+# Download the model if not already present
+if not os.path.exists("models/CNN.h5"):
+    download_model()
 
 # Load the trained model
 model = load_model("models/CNN.h5")
@@ -44,6 +50,7 @@ def preprocess_image(image: Image.Image) -> np.ndarray:
 # Prediction endpoint
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
+    prediction_requests.inc()  # Increment the counter for each request
     try:
         image = Image.open(file.file)
         image_array = preprocess_image(image)
@@ -51,4 +58,11 @@ async def predict(file: UploadFile = File(...)):
         predicted_label = class_labels[np.argmax(prediction)]
         return {"predicted_text": predicted_label}
     except Exception as e:
+        prediction_errors.inc()  # Increment the error counter
         return JSONResponse(status_code=500, content={"error": str(e)})
+
+# Metrics endpoint for Prometheus
+@app.get("/metrics")
+async def metrics():
+    data = generate_latest()
+    return JSONResponse(content=data, media_type=CONTENT_TYPE_LATEST)
