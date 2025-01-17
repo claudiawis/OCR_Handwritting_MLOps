@@ -1,21 +1,24 @@
 from fastapi import FastAPI, File, UploadFile
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
+from prometheus_fastapi_instrumentator import Instrumentator
+from prometheus_client import Summary
 from tensorflow.keras.models import load_model
 from PIL import Image
 import numpy as np
 import requests
 import os
-from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
 
 # Initialize FastAPI app
 app = FastAPI()
 
+# Integrate Prometheus instrumentation
+Instrumentator().instrument(app).expose(app)
+
 # Remote model URL
 MODEL_URL = "https://dagshub.com/KazemZh/OCR_Handwritting_MLOps/raw/main/models/CNN.h5"
 
-# Prometheus counters
-prediction_requests = Counter('prediction_requests_total', 'Total number of prediction requests')
-prediction_errors = Counter('prediction_errors_total', 'Total number of prediction errors')
+# Create an object Summary to save the inference time
+inference_time_summary = Summary('inference_time_seconds', 'Time taken for inference')
 
 # Function to download the model from the repository
 def download_model():
@@ -47,22 +50,42 @@ def preprocess_image(image: Image.Image) -> np.ndarray:
     image_array = image_array.reshape(-1, 28, 28, 1)  # Reshape for model input
     return image_array
 
-# Prediction endpoint
-@app.post("/predict")
-async def predict(file: UploadFile = File(...)):
-    prediction_requests.inc()  # Increment the counter for each request
+#######################################
+# Prediction Endpoint
+@app.post("/predict/")
+def predict(file: UploadFile = File(...)):
     try:
+        # Load and preprocess the image
         image = Image.open(file.file)
         image_array = preprocess_image(image)
-        prediction = model.predict(image_array)
-        predicted_label = class_labels[np.argmax(prediction)]
+
+        # Make the prediction
+        with inference_time_summary.time():
+            prediction = model.predict(image_array)
+            predicted_label = class_labels[np.argmax(prediction)]
+
         return {"predicted_text": predicted_label}
+
     except Exception as e:
-        prediction_errors.inc()  # Increment the error counter
         return JSONResponse(status_code=500, content={"error": str(e)})
 
-# Metrics endpoint for Prometheus
+#######################################
+# Root Endpoint
+@app.get("/", response_class=HTMLResponse)
+def root():
+    return """
+    <html>
+    <body>
+        <h1>Welcome to the Handwritten Text Recognition API</h1>
+        <p>Use the <code>/predict/</code> endpoint to upload an image and get predictions.</p>
+    </body>
+    </html>
+    """
+
+#######################################
+# Metrics Endpoint (for Prometheus)
 @app.get("/metrics")
 async def metrics():
+    from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
     data = generate_latest()
     return JSONResponse(content=data, media_type=CONTENT_TYPE_LATEST)
