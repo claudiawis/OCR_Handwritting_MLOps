@@ -36,3 +36,6 @@ python-multipart==0.0.6
 
 # For reading models directly from the repository
 requests==2.31.0
+
+# Prometheus Integration
+prometheus-fastapi-instrumentator==6.1.0
