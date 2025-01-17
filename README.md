@@ -250,6 +250,67 @@ To stop the running services:
     docker-compose down
 
 
+## Monitoring with Prometheus and Grafana
+
+This project includes monitoring capabilities using **Prometheus** for metrics collection and **Grafana** for visualization. Follow the instructions below to set up and use the monitoring features.
+
+### Activating Monitoring
+1. Ensure that Prometheus and Grafana services are defined in the `docker-compose.yml` file.
+2. Start all services using:
+   ```bash
+   docker-compose up -d
+3. Verify that all services, including Prometheus and Grafana, are running:
+   ```bash
+   docker ps
+
+### Accessing Prometheus
+
+- Prometheus is available at **[http://localhost:9090](http://localhost:9090)** (or replace `localhost` with your VM's IP address if running on a remote server).  
+- Use Prometheus to inspect raw metrics collected from the API.
+
+---
+
+### Setting Up Grafana
+
+- Access Grafana at **[http://localhost:3000](http://localhost:3000)** (or replace `localhost` with your VM's IP address).  
+- The default credentials for Grafana are:  
+  - **Username:** `admin`  
+  - **Password:** `admin` (you may be prompted to change it on the first login).  
+
+---
+
+### Configuring Prometheus as a Data Source in Grafana
+
+1. Navigate to **Connections > Data sources** in the Grafana sidebar.  
+2. Choose **Prometheus** as the data source.  
+3. Set the connection URL to:  **[http://localhost:9090](http://localhost:9090)** if using Docker Compose.
+4. Click **Save & test** to confirm the connection.
+
+### Creating Dashboards in Grafana
+
+1. Navigate to the **Dashboards** tab and click **New > New dashboard**.
+2. Click **Add visualization** and select **Prometheus** as the data source.
+
+#### Example Metrics to Monitor
+
+**1. Number of Predictions**  
+   - Use the metric:
+     ```
+     http_requests_total
+     ```
+   - Apply the label filter:
+     ```
+     handler = /predict/
+     ```
+   - This will track successful requests (responses between 200-299) and client-side error requests (responses between 400-499).
+
+**2. Inference Time**  
+   - Add the following query to monitor the average inference time over the last 5 minutes:
+     ```promql
+     rate(inference_time_seconds_sum[5m]) / rate(inference_time_seconds_count[5m])
+     ```
+
+
 ---
 
 
