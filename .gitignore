@@ -25,3 +25,18 @@ venv
 # Ignore IDE specific files (e.g., VS Code, PyCharm)
 .vscode/
 .idea/
+
+# Ignore environment variables file
+.env
+
+# Ignore Python bytecode
+__pycache__/
+
+# Ignore logs directory
+logs/
+
+# Ignore model files
+models/
+
+# Ignore DVC files (if using DVC)
+*.dvc
