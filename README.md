@@ -184,6 +184,23 @@ The FastAPI application is located in the `src/app/app.py` file. You can run the
 
 Then open your browser at http://localhost:8000/docs to access the FastAPI interactive docs.
 
+### 9. Airflow
+
+Airflow is used to orchestrate Docker containers in an OCR project to ensure scalable, automated, and reliable execution of OCR tasks. By utilizing Airflow’s Directed Acyclic Graphs (DAGs), we can define, schedule, and monitor workflows that deploy and manage Docker containers for each step in the OCR process. This allows for seamless handling of large datasets, parallel processing, error handling, and efficient resource management, ultimately improving the performance and maintainability of the OCR pipeline.
+
+To run airflow and essentially run the project follow these steps if you already have airflow for docker installed and initialized:
+
+    docker-compose -f docker-compose_airflow.yaml up -d
+
+You can check whether the containers are working fine via:
+
+docker-compose -f docker-compose_airflow.yaml ps
+
+Once running you can reach it here:
+http://localhost:8081/
+
+username: airflow
+password: airflow
 
 ---
 
