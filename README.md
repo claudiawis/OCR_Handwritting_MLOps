@@ -202,6 +202,19 @@ http://localhost:8081/
 username: airflow
 password: airflow
 
+
+## 10. Authenticate App
+
+We decided to implemente a separate FastAPI application to verify users and authorize their roles. The roles include user and admin
+
+user details: name-user1 password-password1
+admin details: admin1 password2
+
+cd src/authenticate_app
+You can open the verification API via:
+uvicorn authenticate_API:app --host 0.0.0.0 --port 8009
+
+best view: http://localhost:8009/docs
 ---
 
 Following these steps will set up your project environment correctly and ensure that all necessary dependencies and datasets are available for development and testing. If you encounter any issues, please refer to the troubleshooting section or contact the project maintainers for assistance.
