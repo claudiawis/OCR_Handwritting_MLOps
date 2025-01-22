@@ -212,18 +212,18 @@ admin details: admin1 password2
 
 cd src/authenticate_app
 You can open the verification API via:
-uvicorn authenticate_API:app --host 0.0.0.0 --port 8009
-
-best view: http://localhost:8009/docs))
+xxx
 
 Draft 2:
 
 from the cd /src/authenticate_app
 
-put this command in terminal: uvicorn fast_api_basic_security:app --host 0.0.0.0 --port 8001
+uvicorn fast_api_basic_security:app --reload --host 127.0.0.1 --port 8111
+
+go to: localhost:81111/user in the browser of your choice and enter the user credentials and you will be redirected to the service.1
 
 Then authenticate as user1 with password 1resu 
-After successfully doing that change the endpoint in the head to /user
+
 You should be forwarded directly to the page (need to ensure the prediction service is running before)
 
 ---
