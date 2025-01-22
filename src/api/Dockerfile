@@ -1,0 +1,23 @@
+# Use the official Python base image
+FROM python:3.11
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the FastAPI app files to the container
+COPY ./src/api ./src/api
+
+# Copy the requirements file
+COPY ./src/api/requirements.txt ./requirements.txt
+
+# Install required system packages
+RUN apt-get update && apt-get install -y git
+
+# Install the required Python packages
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose the port for the API
+EXPOSE 8000
+
+# Run the FastAPI app
+CMD ["uvicorn", "src.api.api:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -174,6 +174,144 @@ Evaluates the performance of the trained CNN model on the test dataset.
 
     python src/models/evaluate_model.py
 
+### 8. Use the FastAPI Inference API
+
+After training your model, you can deploy an inference API using **FastAPI**. This API allows users to upload images of handwritten words and get predictions.
+
+The FastAPI application is located in the `src/api/api.py` file. You can run the API server using **uvicorn**, a lightweight ASGI server. Use the following command from the main directory:
+
+    uvicorn src.api.api:app --reload
+
+Then open your browser at http://localhost:8000/docs to access the FastAPI interactive docs.
+
+
 ---
+
+## Dockerfiles
+
+### Dockerfile for ingestion step:
+
+Make sure that your Docker Daemon (engine) is not running, for , on Windows, Docker relies on Docker Desktop to run the Docker Daemon. So make sure it is already lunched by opening it.
+Build the Docker image by running the following command from the root directory:
+
+    docker build -t ingestion_image -f src/data/Dockerfile .
+
+Then run the Docker container with the volume containing the raw data:
+
+    docker run -v "$(pwd)/data/raw:/app/data/raw" -v "$(pwd)/.dvc:/app/.dvc" -v "$(pwd)/.git:/app/.git" ingestion_image
+
+### Dockerfile for training step:
+
+First, create the image for the training step from the root directory using the command bellow:
+
+    docker build -t training_image -f src/models/Dockerfile .
+
+Then run the Docker container that include the required volumes:
+
+    docker run -v "$(pwd)/data:/app/data" -v "$(pwd)/models:/app/models" -v "$(pwd)/.dvc:/app/.dvc" -v "$(pwd)/.git:/app/.git" training_image
+
+### Dockerfile for prediction step:
+
+Create the image for the prediction step from the root directory using the command bellow:
+
+    docker build -t prediction_image -f src/api/Dockerfile .
+
+
+Run the Docker container with the command:
+
+    docker run -p 8000:8000 prediction_image
+
+Open your browser at http://localhost:8000/docs to access the FastAPI interactive docs.
+
+### Dockerfile orchestration:
+
+The docker-compose.yml file that will orchestrate your three services (ingestion, training, and prediction), with shared volumes and ports configured accordingly.
+
+Build all services:
+
+    docker-compose build
+
+Run all services:
+
+    docker-compose up
+
+Run services in detached mode (run the services in the background):
+
+    docker-compose up -d
+
+Check Logs for Each Service:
+
+    docker logs ingestion_service
+    docker logs training_service
+    docker logs prediction_service
+
+To stop the running services:
+
+    docker-compose down
+
+
+## Monitoring with Prometheus and Grafana
+
+This project includes monitoring capabilities using **Prometheus** for metrics collection and **Grafana** for visualization. Follow the instructions below to set up and use the monitoring features.
+
+### Activating Monitoring
+1. Ensure that Prometheus and Grafana services are defined in the `docker-compose.yml` file.
+2. Start all services using:
+   ```bash
+   docker-compose up -d
+3. Verify that all services, including Prometheus and Grafana, are running:
+   ```bash
+   docker ps
+
+### Accessing Prometheus
+
+- Prometheus is available at **[http://localhost:9090](http://localhost:9090)** (or replace `localhost` with your VM's IP address if running on a remote server).  
+- Use Prometheus to inspect raw metrics collected from the API.
+
+---
+
+### Setting Up Grafana
+
+- Access Grafana at **[http://localhost:3000](http://localhost:3000)** (or replace `localhost` with your VM's IP address).  
+- The default credentials for Grafana are:  
+  - **Username:** `admin`  
+  - **Password:** `admin` (you may be prompted to change it on the first login).  
+
+---
+
+### Configuring Prometheus as a Data Source in Grafana
+
+1. Navigate to **Connections > Data sources** in the Grafana sidebar.  
+2. Choose **Prometheus** as the data source.  
+3. Set the connection URL to:  **[http://localhost:9090](http://localhost:9090)** if using Docker Compose.
+4. Click **Save & test** to confirm the connection.
+
+### Creating Dashboards in Grafana
+
+1. Navigate to the **Dashboards** tab and click **New > New dashboard**.
+2. Click **Add visualization** and select **Prometheus** as the data source.
+
+#### Example Metrics to Monitor
+
+**1. Number of Predictions**  
+   - Use the metric:
+     ```
+     http_requests_total
+     ```
+   - Apply the label filter:
+     ```
+     handler = /predict/
+     ```
+   - This will track successful requests (responses between 200-299) and client-side error requests (responses between 400-499).
+
+**2. Inference Time**  
+   - Add the following query to monitor the average inference time over the last 5 minutes:
+     ```promql
+     rate(inference_time_seconds_sum[5m]) / rate(inference_time_seconds_count[5m])
+     ```
+
+
+---
+
 
 Following these steps will set up your project environment correctly and ensure that all necessary dependencies and datasets are available for development and testing. If you encounter any issues, please refer to the troubleshooting section or contact the project maintainers for assistance.

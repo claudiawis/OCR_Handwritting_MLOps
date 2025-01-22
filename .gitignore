@@ -9,6 +9,7 @@ data/predicted/*     # Ignore all files in the predicted data directory
 
 *.csv                     # Ignore all CSV files
 *.pkl                     # Ignore all pickle files
+*.pyc                     # Ignore all compiled Python files
 
 # Ignore Python virtual environments
 .venv/
@@ -25,3 +26,10 @@ venv
 # Ignore IDE specific files (e.g., VS Code, PyCharm)
 .vscode/
 .idea/
+/metrics
+
+models/CNN.h5
+models/model_architecture_summary.txt
+
+# Ignore pycache
+__pycache__/

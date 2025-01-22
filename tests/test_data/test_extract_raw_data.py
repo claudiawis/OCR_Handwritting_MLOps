@@ -1,62 +1,46 @@
 import unittest
-from unittest import mock
-import tarfile
+from unittest.mock import patch
 import os
-import logging
-from src.data.extract_raw_data import extract_tar_gz  # Adjust the import path as necessary
+from src.data.extract_raw_data import extract_tar_gz
 
-class TestExtractTarGz(unittest.TestCase):
+class TestDataExtraction(unittest.TestCase):
 
-    @mock.patch('os.path.exists')
-    @mock.patch('os.makedirs')
-    def test_file_not_exist(self, mock_makedirs, mock_exists):
-        # Arrange
-        mock_exists.return_value = False  # Simulate that the file does not exist
-        tar_gz_path = "invalid_path.tar.gz"
-        extract_path = "extract_dir"
+    def test_data_extraction(self):
+        """
+        Test the extract_tar_gz function for correct extraction of .tar.gz data.
+        """
+        # Input for the extraction function
+        tar_gz_path = 'data/raw/raw_data.tar.gz'  # Path to the .tar.gz file
+        extract_path = 'data/raw/raw_data'  # Directory where data will be extracted
 
-        # Capture the logging output
-        with self.assertLogs('root', level='ERROR') as log:
-            # Act
-            extract_tar_gz(tar_gz_path, extract_path)
-            # Assert
-            self.assertIn(f"ERROR:root: The file {tar_gz_path} does not exist.", log.output)
+        # Ensure the extraction path is clean before testing
+        if os.path.exists(extract_path):
+            for file in os.listdir(extract_path):
+                file_path = os.path.join(extract_path, file)
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
 
-    @mock.patch('os.path.exists')
-    @mock.patch('os.makedirs')
-    @mock.patch('tarfile.open')
-    def test_directory_creation(self, mock_open, mock_makedirs, mock_exists):
-        # Arrange
-        mock_exists.side_effect = [True, False]  # Simulate file exists, dir does not
-        tar_gz_path = "valid_path.tar.gz"
-        extract_path = "extract_dir"
-
-        # Act
+        # Call the function to extract data
         extract_tar_gz(tar_gz_path, extract_path)
 
-        # Assert
-        mock_makedirs.assert_called_once_with(extract_path, exist_ok=True)
-        mock_open.assert_called_once_with(tar_gz_path, 'r:gz')
+        # Assert that the extracted files exist in the directory
+        extracted_files = os.listdir(extract_path)
+        self.assertGreater(len(extracted_files), 0, "No files were extracted.")
 
-    @mock.patch('os.path.exists')
-    @mock.patch('os.makedirs')
-    @mock.patch('tarfile.open')
-    def test_successful_extraction(self, mock_open, mock_makedirs, mock_exists):
-        # Arrange
-        mock_exists.return_value = True  # Simulate that the file exists
-        mock_tar = mock.Mock()
-        mock_open.return_value.__enter__.return_value = mock_tar  # Mock the tarfile object
+    @patch('builtins.print')
+    def test_invalid_file_path(self, mock_print):
+        """
+        Test the extract_tar_gz function with an invalid file path.
+        """
+        # Invalid path for testing
+        invalid_path = 'data/raw/nonexistent_file.tar.gz'
+        extract_path = 'data/raw/raw_data'
 
-        tar_gz_path = "valid_path.tar.gz"
-        extract_path = "extract_dir"
+        # Call the function with the invalid path and check the printed output
+        extract_tar_gz(invalid_path, extract_path)
 
-        # Act
-        extract_tar_gz(tar_gz_path, extract_path)
-
-        # Assert
-        mock_makedirs.assert_called_once_with(extract_path, exist_ok=True)
-        mock_open.assert_called_once_with(tar_gz_path, 'r:gz')
-        mock_tar.extractall.assert_called_once_with(path=extract_path)
+        # Check if the error message is printed
+        mock_print.assert_called_with(f"Error: The file {invalid_path} does not exist.")
 
 if __name__ == '__main__':
     unittest.main()

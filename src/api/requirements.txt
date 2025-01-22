@@ -1,0 +1,22 @@
+# Data Handling
+numpy<2
+
+# Image Processing
+Pillow==11.0.0  # For image manipulation
+
+# Deep Learning Frameworks
+tensorflow==2.18.0
+keras==3.7.0  # Keras is now part of TensorFlow but sometimes requires explicit inclusion
+
+# Web API Framework
+fastapi==0.100.0  # For building the FastAPI app
+uvicorn==0.23.0  # ASGI server for running the FastAPI app
+
+# For handling file uploads
+python-multipart==0.0.6
+
+# For reading models directly from the repository
+requests==2.31.0
+
+# Prometheus Integration
+prometheus-fastapi-instrumentator==6.1.0

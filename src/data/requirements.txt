@@ -1,0 +1,20 @@
+# Data Handling
+pandas==2.2.3
+numpy<2
+tqdm==4.67.0
+nltk==3.9.1
+
+# Image Processing
+opencv-python-headless==4.8.1.78  # cv2 for image handling
+Pillow==11.0.0  # For image manipulation
+
+# Deep Learning Frameworks
+tensorflow==2.18.0
+
+# Cryptography for DVC
+cryptography>=38.0.4,<45.0.0
+
+# DVC and DagsHub
+dvc==3.58.0
+dvc-http==2.32.0
+dagshub<0.4.0
