@@ -28,13 +28,14 @@ alerting:
 scrape_configs:
   # The job name is added as a `job=<job_name>` tag to all time series extracted from this configuration.
 
-  - job_name: "prometheus"
+  - job_name: prometheus
 
     # Overrides the default global value and retrieves this job's targets every 15 seconds.
     scrape_interval: 15s
 
     static_configs:
-      - targets: ["localhost:9090"]
+      - targets:
+          - localhost:9090
 
   - job_name: "cadvisor"
 
@@ -51,3 +52,11 @@ scrape_configs:
 
     static_configs:
       - targets: ["node-exporter:9100"]
+  
+    # Scrape FastAPI (Prediction Service) metrics
+  - job_name: fastapi
+    metrics_path: /metrics
+    scrape_interval: 10s
+    static_configs:
+      - targets:
+          - prediction_service:8000

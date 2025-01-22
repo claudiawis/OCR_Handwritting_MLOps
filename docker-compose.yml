@@ -34,6 +34,18 @@ services:
       - ./.git:/app/.git
     command: ["sh", "-c", "dvc repro --downstream setup_callbacks"]
 
+  prediction:
+    build:
+      context: .
+      dockerfile: src/api/Dockerfile
+    container_name: prediction_service
+    depends_on:
+      - training
+    ports:
+      - 8000:8000
+    networks:
+      - back-tier
+
   prometheus:
     image: prom/prometheus:v2.36.2
     container_name: prometheus_service
@@ -95,7 +107,7 @@ services:
       - /sys:/sys:ro
       - /var/run:/var/run:rw
     ports:
-      - 8080:8080
+      - 8085:8085
     networks:
       - back-tier
     restart: always

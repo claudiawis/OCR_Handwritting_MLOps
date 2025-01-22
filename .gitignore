@@ -30,3 +30,6 @@ venv
 
 models/CNN.h5
 models/model_architecture_summary.txt
+
+# Ignore pycache
+__pycache__/
