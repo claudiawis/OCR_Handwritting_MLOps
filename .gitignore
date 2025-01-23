@@ -33,3 +33,7 @@ models/model_architecture_summary.txt
 
 # Ignore pycache
 __pycache__/
+src/models/__pycache__
+tests/test_data/__pycache__/
+tests/test_models/__pycache__/
+*.pyc
