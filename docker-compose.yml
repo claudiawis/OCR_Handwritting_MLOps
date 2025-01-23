@@ -1,4 +1,4 @@
-version: "3.8"
+# version: "3.8"
 
 volumes:
   prometheus_data: {}
@@ -33,6 +33,20 @@ services:
       - ./.dvc:/app/.dvc
       - ./.git:/app/.git
     command: ["sh", "-c", "dvc repro --downstream setup_callbacks"]
+
+  tests:
+    build:
+      context: .
+      dockerfile: tests/Dockerfile
+    container_name: test_service
+    volumes:
+      - ./data:/app/data/
+      - ./models:/app/models
+      - ./metrics:/app/metrics
+      - ./tests:/app/tests      # Local tests directory
+      - ./.dvc:/app/.dvc       # DVC configuration
+      - ./.git:/app/.git       # Git repository
+    command: ["python", "-m", "unittest", "discover", "-s", "tests", "-p", "*.py"]
 
   prediction:
     build:
