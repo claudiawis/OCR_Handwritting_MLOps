@@ -6,7 +6,7 @@ To set up the project environment, please follow the steps outlined below:
 
 Creating a virtual environment helps to isolate your project's dependencies and avoid conflicts with other projects. You can create a virtual environment by executing the following command:
 
-    virtualenv .venv
+    python3.11 -m venv .venv
 
 ### 2. Activate the Virtual Environment
 
@@ -49,7 +49,7 @@ After activation, your shell prompt will change to indicate that the virtual env
 
 To install the necessary libraries, use the following command:
 
-pip install -r requirements.txt
+    pip install -r requirements.txt
 
 ### 4. Set Up DVC (Data Version Control)
 
