@@ -1,5 +1,4 @@
 import numpy as np
-import os
 import pickle
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, Dropout, Flatten, Dense

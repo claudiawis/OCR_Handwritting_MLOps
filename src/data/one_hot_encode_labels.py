@@ -1,3 +1,8 @@
+import os
+
+# Suppress TensorFlow logs
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Suppress INFO and WARNING logs
+
 import numpy as np
 from tensorflow.keras.utils import to_categorical
 
