@@ -33,6 +33,7 @@ models/model_architecture_summary.txt
 
 # Ignore pycache
 __pycache__/
+src/api/__pycache__
 
 # Ignore models and metrics
 models/*.keras
