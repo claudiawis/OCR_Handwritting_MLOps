@@ -9,6 +9,9 @@ keras==3.7.0  # Keras is now part of TensorFlow but sometimes requires explicit 
 # Machine Learning Utilities
 scikit-learn==1.6.0
 
+#MLFlow:
+mlflow==2.20.0
+
 #Plotting
 matplotlib
 seaborn
