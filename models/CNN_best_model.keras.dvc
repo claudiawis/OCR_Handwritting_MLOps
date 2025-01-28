@@ -3,3 +3,4 @@ outs:
   size: 7155609
   hash: md5
   path: CNN_best_model.keras
+  isexec: true
