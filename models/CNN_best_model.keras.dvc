@@ -1,6 +1,5 @@
 outs:
-- md5: 21768fe2237c03d994657dc42b78b4d3
+- md5: 7fadc57573da9f515c4ab46045974639
   size: 7155609
   hash: md5
   path: CNN_best_model.keras
-  isexec: true
