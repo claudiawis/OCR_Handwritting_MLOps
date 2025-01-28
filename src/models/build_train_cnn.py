@@ -5,6 +5,8 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, Dropout, Flatten, Dense
 import pandas as pd
 import matplotlib.pyplot as plt
+import mlflow
+import mlflow.keras
 
 def build_model(input_shape, num_classes):
     """
@@ -75,41 +77,58 @@ if __name__ == "__main__":
     input_shape = X_train.shape[1:]
     num_classes = y_train.shape[1]
 
-    # Build the model
-    model_cnn = build_model(input_shape, num_classes)
+    # Set up MLflow tracking
+    mlflow.set_tracking_uri("https://dagshub.com/KazemZh/OCR_Handwritting_MLOps.mlflow")
+    mlflow.set_experiment("OCR_CNN_Training")
 
-    # Save model architecture summary
-    save_model_summary(model_cnn, output_path="models/model_architecture_summary.txt")
+    # Start an MLflow run
+    with mlflow.start_run():
+        # Build the model
+        model_cnn = build_model(input_shape, num_classes)
 
-    # Train the model
-    history = model_cnn.fit(
-        X_train,
-        y_train,
-        validation_data=(X_test, y_test),
-        epochs=100,
-        class_weight=class_weights,
-        callbacks=callbacks,
-        verbose=1,
-    )
+        # Log model summary
+        save_model_summary(model_cnn, output_path="models/model_architecture_summary.txt")
 
-    # Save the trained model
-    model_cnn.save("models/CNN.h5")
-    print("Model training complete. Model saved as models/CNN.h5.")
+        # Log parameters
+        mlflow.log_param("input_shape", input_shape)
+        mlflow.log_param("num_classes", num_classes)
 
-    # Save the training history
-    history_df = pd.DataFrame(history.history)
-    os.makedirs("metrics", exist_ok=True)
-    history_df.to_csv("metrics/training_history.csv", index=False)
-    print("Training history saved as metrics/training_history.csv.")
+        # Train the model
+        history = model_cnn.fit(
+            X_train,
+            y_train,
+            validation_data=(X_test, y_test),
+            epochs=100,
+            class_weight=class_weights,
+            callbacks=callbacks,
+            verbose=1,
+        )
+        
+        # Log metrics
+        for epoch, metrics in enumerate(history.history["accuracy"]):
+            mlflow.log_metric("training_accuracy", metrics, step=epoch)
+            mlflow.log_metric("validation_accuracy", history.history["val_accuracy"][epoch], step=epoch)
 
-    # Plot and save accuracy
-    plt.figure(figsize=(10, 6))
-    plt.plot(history.history["accuracy"], label="Training Accuracy")
-    plt.plot(history.history["val_accuracy"], label="Validation Accuracy", linestyle="--")
-    plt.xlabel("Epochs")
-    plt.ylabel("Accuracy")
-    plt.title("Training vs Validation Accuracy")
-    plt.legend()
-    plt.grid(True)
-    plt.savefig("metrics/training_accuracy.png")
-    print("Training accuracy plot saved as metrics/training_accuracy.png.")
+        # Save the trained model locally and log it to MLflow
+        model_cnn.save("models/CNN.h5")
+        mlflow.keras.log_model(model_cnn, "model")
+
+        # Save the training history
+        history_df = pd.DataFrame(history.history)
+        os.makedirs("metrics", exist_ok=True)
+        history_df.to_csv("metrics/training_history.csv", index=False)
+        print("Training history saved as metrics/training_history.csv.")
+
+        # Plot and save accuracy
+        plt.figure(figsize=(10, 6))
+        plt.plot(history.history["accuracy"], label="Training Accuracy")
+        plt.plot(history.history["val_accuracy"], label="Validation Accuracy", linestyle="--")
+        plt.xlabel("Epochs")
+        plt.ylabel("Accuracy")
+        plt.title("Training vs Validation Accuracy")
+        plt.legend()
+        plt.grid(True)
+        plt.savefig("metrics/training_accuracy.png")
+        print("Training accuracy plot saved as metrics/training_accuracy.png.")
+        mlflow.log_artifact("metrics/training_accuracy.png")
+        mlflow.log_artifact("metrics/training_history.csv")
