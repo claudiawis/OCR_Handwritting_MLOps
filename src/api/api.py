@@ -68,24 +68,3 @@ def predict(file: UploadFile = File(...)):
 
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
-
-#######################################
-# Root Endpoint
-@app.get("/", response_class=HTMLResponse)
-def root():
-    return """
-    <html>
-    <body>
-        <h1>Welcome to the Handwritten Text Recognition API</h1>
-        <p>Use the <code>/predict/</code> endpoint to upload an image and get predictions.</p>
-    </body>
-    </html>
-    """
-
-#######################################
-# Metrics Endpoint (for Prometheus)
-@app.get("/metrics")
-async def metrics():
-    from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
-    data = generate_latest()
-    return JSONResponse(content=data, media_type=CONTENT_TYPE_LATEST)
