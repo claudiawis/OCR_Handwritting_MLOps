@@ -1,12 +1,13 @@
 import numpy as np
 import os
 import pickle
+import dagshub
+import mlflow
+import mlflow.tensorflow
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, Dropout, Flatten, Dense
 import pandas as pd
 import matplotlib.pyplot as plt
-import mlflow
-import mlflow.keras
 
 def build_model(input_shape, num_classes):
     """
@@ -61,6 +62,12 @@ def load_callbacks(callback_path):
     return callbacks
 
 if __name__ == "__main__":
+    # Initialize DAGsHub MLflow Connection
+    dagshub.init(repo_owner="KazemZh", repo_name="OCR_Handwritting_MLOps", mlflow=True)
+
+    # Enable MLflow Autologging for TensorFlow
+    mlflow.tensorflow.autolog()
+
     # Load preprocessed data
     X_train = np.load("data/processed/X_train_reshaped.npy")
     y_train = np.load("data/processed/y_train_one_hot.npy")
@@ -77,21 +84,17 @@ if __name__ == "__main__":
     input_shape = X_train.shape[1:]
     num_classes = y_train.shape[1]
 
-    # Set up MLflow tracking
-    mlflow.set_tracking_uri("https://dagshub.com/KazemZh/OCR_Handwritting_MLOps.mlflow")
-    mlflow.set_experiment("OCR_CNN_Training")
+    with mlflow.start_run():  
+        # Log training start using `set_tag()`
+        mlflow.set_tag("training_status", "started")
 
-    # Start an MLflow run
-    with mlflow.start_run():
         # Build the model
         model_cnn = build_model(input_shape, num_classes)
 
-        # Log model summary
-        save_model_summary(model_cnn, output_path="models/model_architecture_summary.txt")
-
-        # Log parameters
-        mlflow.log_param("input_shape", input_shape)
-        mlflow.log_param("num_classes", num_classes)
+        # Log model architecture
+        model_summary_path = "models/model_summary.txt"
+        save_model_summary(model_cnn, model_summary_path)
+        mlflow.log_artifact(model_summary_path)
 
         # Train the model
         history = model_cnn.fit(
@@ -103,23 +106,32 @@ if __name__ == "__main__":
             callbacks=callbacks,
             verbose=1,
         )
-        
-        # Log metrics
-        for epoch, metrics in enumerate(history.history["accuracy"]):
-            mlflow.log_metric("training_accuracy", metrics, step=epoch)
-            mlflow.log_metric("validation_accuracy", history.history["val_accuracy"][epoch], step=epoch)
 
-        # Save the trained model locally and log it to MLflow
-        model_cnn.save("models/CNN.h5")
-        mlflow.keras.log_model(model_cnn, "model")
+        # Log training completion using `set_tag()`
+        mlflow.set_tag("training_status", "completed")
 
-        # Save the training history
-        history_df = pd.DataFrame(history.history)
+        # Save the trained model in `.keras` format (fixing warning)
+        model_path = "models/CNN.keras"
+        model_cnn.save(model_path)
+        print(f"Model training complete. Model saved as {model_path}")
+
+        # Log the model in MLflow with input example and signature
+        input_example = X_train[:1]  # Example input for inference
+        mlflow.tensorflow.log_model(
+            model_cnn,
+            "cnn_model",
+            input_example=input_example
+        )
+
+        # Log training history
+        history_csv_path = "metrics/training_history.csv"
         os.makedirs("metrics", exist_ok=True)
-        history_df.to_csv("metrics/training_history.csv", index=False)
-        print("Training history saved as metrics/training_history.csv.")
+        history_df = pd.DataFrame(history.history)
+        history_df.to_csv(history_csv_path, index=False)
+        mlflow.log_artifact(history_csv_path)
 
         # Plot and save accuracy
+        plot_path = "metrics/training_accuracy.png"
         plt.figure(figsize=(10, 6))
         plt.plot(history.history["accuracy"], label="Training Accuracy")
         plt.plot(history.history["val_accuracy"], label="Validation Accuracy", linestyle="--")
@@ -128,7 +140,12 @@ if __name__ == "__main__":
         plt.title("Training vs Validation Accuracy")
         plt.legend()
         plt.grid(True)
-        plt.savefig("metrics/training_accuracy.png")
-        print("Training accuracy plot saved as metrics/training_accuracy.png.")
-        mlflow.log_artifact("metrics/training_accuracy.png")
-        mlflow.log_artifact("metrics/training_history.csv")
+        plt.savefig(plot_path)
+        mlflow.log_artifact(plot_path)
+        print(f"Training accuracy plot saved as {plot_path}")
+
+        # Automatically register the model 
+        model_uri = f"runs:/{mlflow.active_run().info.run_id}/cnn_model"
+        mlflow.register_model(model_uri, name="cnn_model")
+
+    print("Training complete! Check DAGsHub MLflow for details.")
