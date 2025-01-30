@@ -373,18 +373,28 @@ chmod +x run_mlops_pipeline.sh
     crontab -e
     ```
 - Add the following line to schedule the pipeline to run automatically on the first day of every month at midnight:
-    ```bash
-    0 0 1 * * /bin/bash $(pwd)/run_mlops_pipeline.sh >> /var/log/mlops_cron.log 2>&1
-    ```
+    - For Lunix (prompt command):
+        ```bash
+        0 0 1 * * /bin/bash $(pwd)/run_mlops_pipeline.sh >> /var/log/mlops_cron.log 2>&1
+        ```
+    - For Windows (powershell):
+        ```bash
+        0 0 1 * * powershell -ExecutionPolicy Bypass -File $(pwd)/run_mlops_pipeline.sh >> /var/log/mlops_cron.log 2>&1
+        ```
 #### **3. Verify and Test**
 - Check if the cron job was added:
     ```bash
     crontab -l
     ```
 - Run the script manually to test:
-    ```bash
-    /bin/bash run_mlops_pipeline.sh
-    ```
+    - For Lunix (prompt command):
+        ```bash
+        /bin/bash run_mlops_pipeline.sh
+        ```
+    - For Windows (powershell):
+        ```bash
+        powershell -ExecutionPolicy Bypass -File run_mlops_pipeline.ps1
+        ```
 - Check logs if needed:
     ```bash
     cat /var/log/mlops_cron.log
