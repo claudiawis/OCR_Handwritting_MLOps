@@ -206,8 +206,93 @@ The FastAPI application is located in the `src/api/api.py` file. You can run the
 
 Then open your browser at http://localhost:8000/docs to access the FastAPI interactive docs.
 
+## Unit Tests
+This section describes the steps required to run unit tests, ensuring that the code functions as expected.
 
----
+#### Test the Data Processing Scripts: 
+Run the unit tests for the data processing scripts to ensure they are working as expected
+
+#### 1. Test the extract_raw_data.py script:
+
+    python -m unittest tests/test_data/test_extract_raw_data.py
+
+This test verifies that the extraction of raw data from a `.tar.gz` archive is done correctly, ensuring the data is unpacked properly for further processing.
+
+#### 2. Test the load_dataset.py script:
+
+    python -m unittest tests/test_data/test_load_dataset.py
+
+This test checks if the dataset is loaded into memory correctly, ensuring that the image paths and transcription data are accurate and accessible.
+
+#### 3. Test the filter_data.py script:
+
+    python -m unittest tests/test_data/test_filter_data.py
+
+This test ensures that the dataset filtering process works, keeping only relevant transcriptions within the desired frequency range, and removing unwanted data.
+
+#### 4. Test the clean_data.py script:
+
+    python -m unittest tests/test_data/test_clean_data.py
+
+This test validates the cleaning process, ensuring that unwanted stopwords and symbols are removed from the transcriptions, making the data ready for model training.
+
+#### 5. Test the encode_data.py script:
+
+    python -m unittest tests/test_data/test_encode_data.py
+
+This test checks that categorical features are correctly encoded into numerical values, preparing the data for model input.
+
+#### 6. Test the prepare_features.py script:
+
+    python -m unittest tests/test_data/test_prepare_features.py
+
+This test ensures that the features and labels are prepared correctly, ready for training by extracting relevant data for model input and target predictions.
+
+#### 7. Test the reshape_data.py script:
+
+    python -m unittest tests/test_data/test_reshape_data.py
+
+This test checks that the data is reshaped to fit the input requirements of a CNN, ensuring the proper format for deep learning models.
+
+#### 8. Test the split_data.py script:
+
+    python -m unittest tests/test_data/test_split_data.py
+
+This test ensures that the data is split correctly into training and testing sets, ensuring balanced sets for model evaluation.
+
+#### 9. Test the calculate_class_weights.py script:
+
+    python -m unittest tests/test_data/test_calculate_class_weights.py
+
+This test validates the calculation of class weights to handle class imbalance, ensuring the model can learn effectively from all classes.
+
+#### 10. Test the one_hot_encode_labels.py script:
+
+    python -m unittest tests/test_data/test_one_hot_encode_labels.py
+
+This test ensures that the one-hot encoding of labels is done correctly, converting categorical labels into a format suitable for multi-class classification.
+
+##### Test the Model Scripts:
+Run the unit tests for the model-related scripts to ensure the model is built, trained, and evaluated properly.
+
+#### 11. Test the setup_callbacks.py script:
+
+    python -m unittest tests/test_models/test_setup_callbacks.py
+
+This test ensures that early stopping and model checkpoint callbacks are set up properly, optimizing training by halting when necessary and saving the best model.
+
+#### 12. Test the build_train_cnn.py script:
+
+    python -m unittest tests/test_models/test_build_train_cnn.py
+
+This test verifies the creation and training of the CNN model, ensuring that the model architecture is constructed, trained, and saved with proper settings.
+
+#### 13. Test the evaluate_model.py script:
+
+    python -m unittest tests/test_models/test_evaluate_model.py
+
+This test evaluates the performance of the trained CNN model on the test data, generating classification reports and confusion matrices to assess the model’s effectiveness.
+
 
 ## Dockerfiles
 
