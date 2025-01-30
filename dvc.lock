@@ -7,10 +7,12 @@ stages:
       hash: md5
       md5: b829b5192b30f62c8770837b5f44616c
       size: 4252862892
+      isexec: true
     - path: src/data/extract_raw_data.py
       hash: md5
-      md5: f08028231da32e4f4e2b4fbf41cc90ca
-      size: 1723
+      md5: 8b405ae455a6cf91fa28878355e2b868
+      size: 1688
+      isexec: true
     outs:
     - path: data/raw/raw_data/data
       hash: md5
@@ -27,13 +29,15 @@ stages:
       nfiles: 0
     - path: src/data/load_dataset.py
       hash: md5
-      md5: ef02a9b324fe49a037dfc63bb388da63
-      size: 2733
+      md5: 4e3de6055c7b0393b4677915196d9e15
+      size: 2673
+      isexec: true
     outs:
     - path: data/raw/words.csv
       hash: md5
       md5: 83aacd67b31e17cb7264483a602c800c
       size: 12638385
+      isexec: true
   load_data:
     cmd: python src/data/filter_data.py
     deps:
@@ -57,15 +61,18 @@ stages:
       hash: md5
       md5: 83aacd67b31e17cb7264483a602c800c
       size: 12638385
+      isexec: true
     - path: src/data/filter_data.py
       hash: md5
-      md5: 2b070da276aeed9dfa67cb71f3ed8553
-      size: 2155
+      md5: 0884fa4ceed28cd2ca6e18fcc49ca7f3
+      size: 2108
+      isexec: true
     outs:
     - path: data/processed/filtered_data.csv
       hash: md5
       md5: 2dc75802f376758c9f8ff593fae2709a
       size: 719143
+      isexec: true
   clean_data:
     cmd: python src/data/clean_data.py
     deps:
@@ -73,15 +80,18 @@ stages:
       hash: md5
       md5: 2dc75802f376758c9f8ff593fae2709a
       size: 719143
+      isexec: true
     - path: src/data/clean_data.py
       hash: md5
-      md5: ffab648993b4aef7899b36c90290e13d
-      size: 2369
+      md5: df61322ccd53ebd10c4beefd61e68c80
+      size: 2323
+      isexec: true
     outs:
     - path: data/processed/cleaned_data.csv
       hash: md5
       md5: 0f40a569b05eeaac6bf144b3d9ab7a83
       size: 291380
+      isexec: true
   encode_data:
     cmd: python src/data/encode_data.py
     deps:
@@ -89,15 +99,18 @@ stages:
       hash: md5
       md5: 0f40a569b05eeaac6bf144b3d9ab7a83
       size: 291380
+      isexec: true
     - path: src/data/encode_data.py
       hash: md5
-      md5: 79b4a8b51e4d72a20bc4e78656a340ce
-      size: 1051
+      md5: a0518bbfe907e4139ea6d772815a0573
+      size: 1023
+      isexec: true
     outs:
     - path: data/processed/encoded_data.csv
       hash: md5
       md5: 5c1b3f7d225bdad4fb25552837395833
       size: 298046
+      isexec: true
   prepare_features:
     cmd: python src/data/prepare_features.py
     deps:
@@ -105,19 +118,23 @@ stages:
       hash: md5
       md5: 5c1b3f7d225bdad4fb25552837395833
       size: 298046
+      isexec: true
     - path: src/data/prepare_features.py
       hash: md5
-      md5: 096ee179cb93164961edcd05b63fdbf3
-      size: 2121
+      md5: c107930be6365c53a5d56c56e07f63de
+      size: 2068
+      isexec: true
     outs:
     - path: data/processed/features.npy
       hash: md5
       md5: 8e0ac2041649313567d4481236ff4c05
       size: 16802816
+      isexec: true
     - path: data/processed/labels.npy
       hash: md5
       md5: 27867d9a998088c637c4ecba042f37bf
       size: 21560
+      isexec: true
   split_data:
     cmd: python src/data/split_data.py
     deps:
@@ -125,31 +142,38 @@ stages:
       hash: md5
       md5: 8e0ac2041649313567d4481236ff4c05
       size: 16802816
+      isexec: true
     - path: data/processed/labels.npy
       hash: md5
       md5: 27867d9a998088c637c4ecba042f37bf
       size: 21560
+      isexec: true
     - path: src/data/split_data.py
       hash: md5
-      md5: bbc9e0eb68a55e4fddedc96e20c9c54b
-      size: 977
+      md5: 16b42890c754490f415c98e06506a082
+      size: 951
+      isexec: true
     outs:
     - path: data/processed/X_test.npy
       hash: md5
       md5: 137464516553b329c0d47870f22c7429
       size: 3361920
+      isexec: true
     - path: data/processed/X_train.npy
       hash: md5
       md5: dc53c15118eb9ba06db9a00e965d3c69
       size: 13441024
+      isexec: true
     - path: data/processed/Y_test.npy
       hash: md5
       md5: 8812e20b83a8725ced9d9f9e80b3aae9
       size: 4416
+      isexec: true
     - path: data/processed/Y_train.npy
       hash: md5
       md5: 7a90df12370a514f50cd7387853f1feb
       size: 17272
+      isexec: true
   reshape_data:
     cmd: python src/data/reshape_data.py
     deps:
@@ -157,23 +181,28 @@ stages:
       hash: md5
       md5: 137464516553b329c0d47870f22c7429
       size: 3361920
+      isexec: true
     - path: data/processed/X_train.npy
       hash: md5
       md5: dc53c15118eb9ba06db9a00e965d3c69
       size: 13441024
+      isexec: true
     - path: src/data/reshape_data.py
       hash: md5
-      md5: ec32f23188d69f0db63734e9e932ab42
-      size: 1237
+      md5: bfa956cf133dd82cb532ac69953328ff
+      size: 1211
+      isexec: true
     outs:
     - path: data/processed/X_test_reshaped.npy
       hash: md5
       md5: 5247bf374d82c3e827e2d59d34619d0c
       size: 3361920
+      isexec: true
     - path: data/processed/X_train_reshaped.npy
       hash: md5
       md5: 2c6ae84e0e026bfe54b877e8cb2a4346
       size: 13441024
+      isexec: true
   calculate_class_weights:
     cmd: python src/data/calculate_class_weights.py
     deps:
@@ -181,15 +210,18 @@ stages:
       hash: md5
       md5: 7a90df12370a514f50cd7387853f1feb
       size: 17272
+      isexec: true
     - path: src/data/calculate_class_weights.py
       hash: md5
-      md5: 52abce1c513420a48d53aefc93565582
-      size: 1214
+      md5: 1b602f3971180dc2093d36a569f754d4
+      size: 1184
+      isexec: true
     outs:
     - path: data/processed/class_weights.npy
       hash: md5
       md5: 7adeed5e291a93a080164810c0dfb1d6
       size: 839
+      isexec: true
   one_hot_encode_labels:
     cmd: python src/data/one_hot_encode_labels.py
     deps:
@@ -197,35 +229,42 @@ stages:
       hash: md5
       md5: 8812e20b83a8725ced9d9f9e80b3aae9
       size: 4416
+      isexec: true
     - path: data/processed/Y_train.npy
       hash: md5
       md5: 7a90df12370a514f50cd7387853f1feb
       size: 17272
+      isexec: true
     - path: src/data/one_hot_encode_labels.py
       hash: md5
-      md5: 466bcc8a10e7462768b2b487cb579a87
-      size: 1492
+      md5: eb0a8c3064cba157b1c2879c2b3912ee
+      size: 1460
+      isexec: true
     outs:
     - path: data/processed/y_test_one_hot.npy
       hash: md5
       md5: 34c27a2341b30ad021aa5d5da2c3456c
       size: 85888
+      isexec: true
     - path: data/processed/y_train_one_hot.npy
       hash: md5
       md5: 6cf2f518a87f932cd7df4f9b6270ab63
       size: 343008
+      isexec: true
   setup_callbacks:
     cmd: python src/models/setup_callbacks.py
     deps:
     - path: src/models/setup_callbacks.py
       hash: md5
-      md5: cbd62b9d478468d9b5dd2b505d3a5657
-      size: 2020
+      md5: da89d922df3e88acbfb9343d50833729
+      size: 1966
+      isexec: true
     outs:
     - path: models/callbacks.keras
       hash: md5
       md5: d5b4a474134e3f6ffb93872da5628926
       size: 605
+      isexec: true
   build_model:
     cmd: python src/models/build_cnn.py
     deps:
@@ -240,47 +279,53 @@ stages:
       hash: md5
       md5: 5247bf374d82c3e827e2d59d34619d0c
       size: 3361920
+      isexec: true
     - path: data/processed/X_train_reshaped.npy
       hash: md5
       md5: 2c6ae84e0e026bfe54b877e8cb2a4346
       size: 13441024
+      isexec: true
     - path: data/processed/class_weights.npy
       hash: md5
       md5: 7adeed5e291a93a080164810c0dfb1d6
       size: 839
+      isexec: true
     - path: data/processed/y_test_one_hot.npy
       hash: md5
       md5: 34c27a2341b30ad021aa5d5da2c3456c
       size: 85888
+      isexec: true
     - path: data/processed/y_train_one_hot.npy
       hash: md5
       md5: 6cf2f518a87f932cd7df4f9b6270ab63
       size: 343008
+      isexec: true
     - path: models/callbacks.keras
       hash: md5
       md5: d5b4a474134e3f6ffb93872da5628926
       size: 605
+      isexec: true
     - path: src/models/build_train_cnn.py
       hash: md5
-      md5: 17624f338e862e226d9f9eb67eea4505
-      size: 4816
+      md5: 804dcce53ae01bbb36d25bdf942d5f8a
+      size: 5190
+      isexec: true
     outs:
     - path: metrics/training_accuracy.png
       hash: md5
-      md5: d9f2bd12ae209a6dfc0b05a342664613
-      size: 42944
-    - path: metrics/training_history.csv
+      md5: 6e79a5e75ac5eb04d21d82f4fab21a64
+      size: 40372
+      isexec: true
+    - path: models/CNN.keras
       hash: md5
-      md5: f873e972cf1d3b0f94c95cd99d8529d0
-      size: 3236
-    - path: models/CNN.h5
-      hash: md5
-      md5: f5dbf7acf7857a6d1131ea2367ea6eba
-      size: 7153408
+      md5: dd6900a1ba42e17f72ff54c7f89abff5
+      size: 7155170
+      isexec: true
     - path: models/model_architecture_summary.txt
       hash: md5
-      md5: 624bf8cd61ed0246203b2d7762e1aaf7
-      size: 3308
+      md5: 09e4946c7d6931f32fb3c7b013b84c2c
+      size: 3286
+      isexec: true
   evaluate_model:
     cmd: python src/models/evaluate_model.py
     deps:
@@ -288,28 +333,25 @@ stages:
       hash: md5
       md5: 5247bf374d82c3e827e2d59d34619d0c
       size: 3361920
+      isexec: true
     - path: data/processed/y_test_one_hot.npy
       hash: md5
       md5: 34c27a2341b30ad021aa5d5da2c3456c
       size: 85888
-    - path: models/CNN.h5
+      isexec: true
+    - path: models/CNN.keras
       hash: md5
-      md5: f5dbf7acf7857a6d1131ea2367ea6eba
-      size: 7153408
+      md5: dd6900a1ba42e17f72ff54c7f89abff5
+      size: 7155170
+      isexec: true
     - path: src/models/evaluate_model.py
       hash: md5
-      md5: cafba2c7f8507a4f94af4879899294f3
-      size: 1282
+      md5: 941893e774e6d5fea5ba7e5c7cc50ab3
+      size: 1262
+      isexec: true
     outs:
-    - path: metrics/classification_report.csv
-      hash: md5
-      md5: 5c7c3979c68eda7fa79a25b8f78ab9d8
-      size: 1375
-    - path: metrics/confusion_matrix.csv
-      hash: md5
-      md5: 2db785a75bc2646b0526df8052974af8
-      size: 10020
     - path: metrics/confusion_matrix.png
       hash: md5
-      md5: 22605e7631a3fb8473506d43a024aef9
-      size: 50930
+      md5: 144aa29352039014b3533d7d00ee6a58
+      size: 51959
+      isexec: true

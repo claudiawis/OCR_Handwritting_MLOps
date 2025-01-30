@@ -84,6 +84,8 @@ if __name__ == "__main__":
     input_shape = X_train.shape[1:]
     num_classes = y_train.shape[1]
 
+    mlflow.set_experiment("OCR_CNN_Training")
+ 
     with mlflow.start_run():  
         # Log training start using `set_tag()`
         mlflow.set_tag("training_status", "started")
@@ -92,7 +94,7 @@ if __name__ == "__main__":
         model_cnn = build_model(input_shape, num_classes)
 
         # Log model architecture
-        model_summary_path = "models/model_summary.txt"
+        model_summary_path = "models/model_architecture_summary.txt"
         save_model_summary(model_cnn, model_summary_path)
         mlflow.log_artifact(model_summary_path)
 
@@ -123,12 +125,12 @@ if __name__ == "__main__":
             input_example=input_example
         )
 
-        # Log training history
-        history_csv_path = "metrics/training_history.csv"
-        os.makedirs("metrics", exist_ok=True)
-        history_df = pd.DataFrame(history.history)
-        history_df.to_csv(history_csv_path, index=False)
-        mlflow.log_artifact(history_csv_path)
+        # # Log training history
+        # history_csv_path = "metrics/training_history.csv"
+        # os.makedirs("metrics", exist_ok=True)
+        # history_df = pd.DataFrame(history.history)
+        # history_df.to_csv(history_csv_path, index=False)
+        # mlflow.log_artifact(history_csv_path)
 
         # Plot and save accuracy
         plot_path = "metrics/training_accuracy.png"
