@@ -26,9 +26,28 @@ jobs:
           pip install dvc
           pip install -r requirements.txt  # Install other dependencies
 
+      - name: Check DVC Remote Configuration
+        run: |
+          dvc remote list  # Check if DVC remote is configured correctly
+
       - name: Pull DVC data
         run: |
           dvc pull --force  # Force pull the data tracked by DVC
+
+      - name: Check for Missing Files
+        run: |
+          # List expected files to verify if they exist
+          echo "Checking for missing DVC files..."
+          if [ ! -f data/processed/cleaned_data.csv ]; then
+            echo "Warning: cleaned_data.csv is missing!"
+          fi
+          if [ ! -f data/raw/raw_data ]; then
+            echo "Warning: raw_data is missing!"
+          fi
+          if [ ! -f data/processed/X_train.npy ]; then
+            echo "Warning: X_train.npy is missing!"
+          fi
+          # Add more checks as needed for your files
 
       - name: Run Tests
         run: |
