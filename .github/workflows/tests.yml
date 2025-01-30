@@ -16,20 +16,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'  # Specify your Python version
 
-      - name: Build Docker Image
+      - name: Install DVC and dependencies
         run: |
-          docker build -t test_service -f tests/Dockerfile .
+          pip install dvc
+          pip install -r requirements.txt  # Install other dependencies
+
+      - name: Pull DVC data
+        run: |
+          dvc pull  # Pull the data tracked by DVC
 
       - name: Run Tests
         run: |
-          docker run --rm \
-            -v ${{ github.workspace }}/data:/app/data \
-            -v ${{ github.workspace }}/models:/app/models \
-            -v ${{ github.workspace }}/metrics:/app/metrics \
-            -v ${{ github.workspace }}/tests:/app/tests \
-            -v ${{ github.workspace }}/.dvc:/app/.dvc \
-            -v ${{ github.workspace }}/.git:/app/.git \
-            test_service python -m unittest discover -s /app/tests -p '*.py'
+          python -m unittest discover -s tests -p '*.py'  # Adjust this command based on your test framework
