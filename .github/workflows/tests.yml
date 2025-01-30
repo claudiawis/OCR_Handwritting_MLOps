@@ -28,7 +28,7 @@ jobs:
 
       - name: Pull DVC data
         run: |
-          dvc pull  # Pull the data tracked by DVC
+          dvc pull --force  # Force pull the data tracked by DVC
 
       - name: Run Tests
         run: |
