@@ -226,13 +226,19 @@ Then authenticate as user1 with password 1resu
 
 You should be forwarded directly to the page (need to ensure the prediction service is running before)
 
----
+Draft 3:
+This functionality allows to access the prediction directly through the authentication app
+To test start the prediction app as above and start the authentication app as follows:
+
+uvicorn src.authenticate_app.gateway_combined:app --reload --host 127.0.0.1 --port 8111
+
+Then authenticate as user1 with password 1resu 
 
 ## Dockerfiles
 
 ### Dockerfile for ingestion step:
 
-Make sure that your Docker Daemon (engine) is not running, for , on Windows, Docker relies on Docker Desktop to run the Docker Daemon. So make sure it is already lunched by opening it.
+Make sure that your Docker Daemon (engine) is not running, for , on Windows, Docker relies on Docker Desktop to run the Docker Daemon. So make sure it is already launched by opening it.
 Build the Docker image by running the following command from the root directory:
 
     docker build -t ingestion_image -f src/data/Dockerfile .
