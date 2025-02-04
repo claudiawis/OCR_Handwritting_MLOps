@@ -40,3 +40,4 @@ models/*.keras
 metrics/*.csv
 metrics/*.png
 apt_pkg.cpython-310-x86_64-linux-gnu.so
+airflow/
