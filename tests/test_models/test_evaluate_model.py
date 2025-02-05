@@ -82,8 +82,8 @@ class TestEvaluateModel(unittest.TestCase):
 
         # Verify confusion matrix dimensions
         cm_loaded = np.loadtxt(self.cm_path, delimiter=",")
-        self.assertEqual(cm_loaded.shape[0], 3, "Confusion matrix does not have 3 rows.")
-        self.assertEqual(cm_loaded.shape[1], 3, "Confusion matrix does not have 3 columns.")
+        self.assertEqual(cm_loaded.shape[0], 20, "Confusion matrix does not have 20 rows.")
+        self.assertEqual(cm_loaded.shape[1], 20, "Confusion matrix does not have 20 columns.")
         logger.info("Confusion matrix dimensions verified: %s", cm_loaded.shape)
 
 if __name__ == "__main__":
