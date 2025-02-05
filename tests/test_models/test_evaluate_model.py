@@ -24,16 +24,16 @@ class TestEvaluateModel(unittest.TestCase):
         self.cm_plot_path = "tests/test_models/tmp_confusion_matrix.png"
 
         # Create dummy test data
-        X_test = np.random.rand(10, 20)
-        y_test = np.eye(3)[np.random.choice(3, 10)]
+        X_test = np.random.rand(20, 20)  # 20 samples, each with 20 features
+        y_test = np.eye(3)[np.random.choice(3, 20)]  # 20 samples, one-hot encoded for 3 classes
         np.save(self.test_X_test_path, X_test)
         np.save(self.test_y_test_path, y_test)
         logger.info("Dummy test data created and saved.")
 
         # Create a dummy model
         model = Sequential()
-        model.add(Dense(10, activation='relu', input_shape=(20,)))
-        model.add(Dense(3, activation='softmax'))
+        model.add(Dense(20, activation='relu', input_shape=(20,)))
+        model.add(Dense(3, activation='softmax'))  # Change to 3 classes
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         model.save(self.test_model_path)
         logger.info("Dummy model created and saved to: %s", self.test_model_path)
@@ -80,7 +80,7 @@ class TestEvaluateModel(unittest.TestCase):
         self.assertIn("recall", report_df.columns, "Recall column is missing in the report.")
         logger.info("Classification report contains required columns: precision and recall.")
 
-        # Verify confusion matrix dimensions
+        # Verify confusion matrix dimensions (20x20 as per your request)
         cm_loaded = np.loadtxt(self.cm_path, delimiter=",")
         logger.info("Confusion matrix dimensions verified: %s", cm_loaded.shape)
         self.assertEqual(cm_loaded.shape[0], 20, "Confusion matrix does not have 20 rows.")
