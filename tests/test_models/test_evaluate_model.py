@@ -25,15 +25,15 @@ class TestEvaluateModel(unittest.TestCase):
 
         # Create dummy test data
         X_test = np.random.rand(20, 20)  # 20 samples, each with 20 features
-        y_test = np.eye(3)[np.random.choice(3, 20)]  # 20 samples, one-hot encoded for 3 classes
+        y_test = np.eye(20)[np.random.choice(20, 20)]  # 20 samples, one-hot encoded for 20 classes
         np.save(self.test_X_test_path, X_test)
         np.save(self.test_y_test_path, y_test)
         logger.info("Dummy test data created and saved.")
 
         # Create a dummy model
         model = Sequential()
-        model.add(Dense(20, activation='relu', input_shape=(20,)))
-        model.add(Dense(3, activation='softmax'))  # Change to 3 classes
+        model.add(Dense(20, activation='relu', input_shape=(20,)))  # Hidden layer
+        model.add(Dense(20, activation='softmax'))  # Change to 20 classes
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         model.save(self.test_model_path)
         logger.info("Dummy model created and saved to: %s", self.test_model_path)
