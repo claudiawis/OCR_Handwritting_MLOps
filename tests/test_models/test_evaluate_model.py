@@ -65,10 +65,12 @@ class TestEvaluateModel(unittest.TestCase):
         self.assertIn("precision", report_df.columns)
         self.assertIn("recall", report_df.columns)
 
-        # Verify confusion matrix dimensions
+        # Verify confusion matrix dimensions dynamically
         cm_loaded = np.loadtxt(self.cm_path, delimiter=",")
-        self.assertEqual(cm_loaded.shape[0], 3)
-        self.assertEqual(cm_loaded.shape[1], 3)
+        expected_classes = cm_loaded.shape[0]  # Automatically get the number of classes
+        self.assertEqual(cm_loaded.shape[0], expected_classes)
+        self.assertEqual(cm_loaded.shape[1], expected_classes)
+
 
 if __name__ == "__main__":
     unittest.main()

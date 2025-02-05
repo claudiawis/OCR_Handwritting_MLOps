@@ -1,5 +1,9 @@
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+
 import os
+
+# Suppress TensorFlow logs
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Suppress INFO and WARNING logs
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import pickle
 
 def setup_callbacks(callbacks_path="models/callbacks.keras", model_checkpoint_path="models/CNN_best_model.keras"):

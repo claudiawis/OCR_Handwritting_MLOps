@@ -40,4 +40,9 @@ models/*.keras
 metrics/*.csv
 metrics/*.png
 apt_pkg.cpython-310-x86_64-linux-gnu.so
+src/models/__pycache__
+tests/test_data/__pycache__/
+tests/test_models/__pycache__/
+*.pyc
+
 airflow/

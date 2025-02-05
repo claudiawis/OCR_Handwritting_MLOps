@@ -1,0 +1,54 @@
+name: CI Tests
+
+on:
+  push:
+    branches:
+      - "**" # Trigger on all branches
+  pull_request:
+    branches:
+      - "**" # Trigger on all pull requests
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'  # Specify Python 3.11
+
+      - name: Install DVC and dependencies
+        run: |
+          pip install dvc
+          pip install -r requirements.txt  # Install other dependencies
+
+      - name: Check DVC Remote Configuration
+        run: |
+          dvc remote list  # Check if DVC remote is configured correctly
+
+      - name: Pull DVC data
+        run: |
+          dvc pull --force  # Force pull the data tracked by DVC
+
+      - name: Check for Missing Files
+        run: |
+          # List expected files to verify if they exist
+          echo "Checking for missing DVC files..."
+          if [ ! -f data/processed/cleaned_data.csv ]; then
+            echo "Warning: cleaned_data.csv is missing!"
+          fi
+          if [ ! -f data/raw/raw_data ]; then
+            echo "Warning: raw_data is missing!"
+          fi
+          if [ ! -f data/processed/X_train.npy ]; then
+            echo "Warning: X_train.npy is missing!"
+          fi
+          # Add more checks as needed for your files
+
+      - name: Run Tests
+        run: |
+          python -m unittest discover -s tests -p '*.py'  # Adjust this command based on your test framework

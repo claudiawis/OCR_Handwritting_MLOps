@@ -12,6 +12,11 @@ This process involves verifying the existence of the archive file and ensuring t
 
 import tarfile
 import os
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.ERROR)
+
 
 def extract_tar_gz(tar_gz_path, extract_path):
     # Check if the .tar.gz file exists
@@ -27,10 +32,8 @@ def extract_tar_gz(tar_gz_path, extract_path):
         tar.extractall(path=extract_path)
         print(f"Extracted {tar_gz_path} to {extract_path}")
 
+
 if __name__ == "__main__":
-    # Define the path to the .tar.gz file and the extraction directory
     tar_gz_path = 'data/raw/raw_data.tar.gz'
     extract_path = 'data/raw/raw_data'
-
-    # Call the extraction function
     extract_tar_gz(tar_gz_path, extract_path)
