@@ -33,6 +33,13 @@ models/model_architecture_summary.txt
 
 # Ignore pycache
 __pycache__/
+src/api/__pycache__
+
+# Ignore models and metrics
+models/*.keras
+metrics/*.csv
+metrics/*.png
+apt_pkg.cpython-310-x86_64-linux-gnu.so
 src/models/__pycache__
 tests/test_data/__pycache__/
 tests/test_models/__pycache__/

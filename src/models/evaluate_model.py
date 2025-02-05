@@ -13,22 +13,22 @@ import matplotlib.pyplot as plt
 # Load data and model
 X_test = np.load("data/processed/X_test_reshaped.npy")
 y_test = np.load("data/processed/y_test_one_hot.npy")
-model = load_model("models/CNN.h5")
+model = load_model("models/CNN.keras")
 
 # Get predictions
 y_pred = model.predict(X_test).argmax(axis=1)
 y_true = y_test.argmax(axis=1)
 
 # Classification report
-report = classification_report(y_true, y_pred, output_dict=True)
-report_df = pd.DataFrame(report).transpose()
-report_df.to_csv("metrics/classification_report.csv", index=True)
-print("Classification report saved as metrics/classification_report.csv.")
+# report = classification_report(y_true, y_pred, output_dict=True)
+# report_df = pd.DataFrame(report).transpose()
+# report_df.to_csv("metrics/classification_report.csv", index=True)
+# print("Classification report saved as metrics/classification_report.csv.")
 
 # Confusion matrix
 cm = confusion_matrix(y_true, y_pred)
-np.savetxt("metrics/confusion_matrix.csv", cm, delimiter=",")
-print("Confusion matrix saved as metrics/confusion_matrix.csv.")
+# np.savetxt("metrics/confusion_matrix.csv", cm, delimiter=",")
+# print("Confusion matrix saved as metrics/confusion_matrix.csv.")
 
 # Plot and save confusion matrix
 plt.figure(figsize=(10, 8))

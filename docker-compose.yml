@@ -25,6 +25,7 @@ services:
       context: .
       dockerfile: src/models/Dockerfile
     container_name: training_service
+    restart: on-failure  #  let the training service fail if the ingestion service has not completed and then restart it after the ingestion service finishes
     depends_on:
       - ingestion
     volumes:
@@ -79,7 +80,7 @@ services:
       - back-tier
     restart: always
 
-  node-exporter:
+  node-exporter:  # Collects system-level metrics about the host machine (e.g., CPU, memory, disk usage, and network activity)
     image: quay.io/prometheus/node-exporter:latest
     container_name: node_exporter
     volumes:
@@ -99,7 +100,7 @@ services:
     deploy:
       mode: global
 
-  alertmanager:
+  alertmanager:    # Handles alerts sent by Prometheus and routes them to various notification systems (e.g., email, Slack, or webhooks)
     image: prom/alertmanager
     container_name: alertmanager_service
     ports:
@@ -113,7 +114,7 @@ services:
       - '--config.file=/etc/alertmanager/config.yml'
       - '--storage.path=/alertmanager'
 
-  cadvisor:
+  cadvisor:   # Monitors Docker container metrics, such as CPU, memory, disk I/O, and network usage for each container.
     image: gcr.io/cadvisor/cadvisor
     container_name: cadvisor_service
     volumes:

@@ -107,21 +107,21 @@ stages:
       - data/processed/y_test_one_hot.npy
       - data/processed/class_weights.npy
     outs:
-      - models/CNN.h5
+      - models/CNN.keras
       - models/model_architecture_summary.txt
-    metrics:
-      - metrics/training_history.csv
+    # metrics:
+    #   - metrics/training_history.csv
     plots:
       - metrics/training_accuracy.png
   evaluate_model:
     cmd: python src/models/evaluate_model.py
     deps:
       - src/models/evaluate_model.py
-      - models/CNN.h5
+      - models/CNN.keras
       - data/processed/X_test_reshaped.npy
       - data/processed/y_test_one_hot.npy
-    metrics:
-      - metrics/classification_report.csv
-      - metrics/confusion_matrix.csv
+    # metrics:
+    #   - metrics/classification_report.csv
+    #   - metrics/confusion_matrix.csv
     plots:
       - metrics/confusion_matrix.png
