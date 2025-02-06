@@ -1,0 +1,19 @@
+# Dockerfile-prediction
+
+# Dockerfile-ingestion
+FROM python:3.11
+
+WORKDIR /app
+
+# Copy the gateway FastAPI app and requirements
+COPY ./src/api/gateway.py ./src/api/
+COPY ./src/api/requirements.txt ./requirements.txt
+
+RUN apt-get update && apt-get install -y git
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose the port that the FastAPI app will run on (8000)
+EXPOSE 8000
+
+# Run the getway FastAPI app using uvicorn
+CMD ["uvicorn", "src.api.gateway:app", "--host", "0.0.0.0", "--port", "8000"]

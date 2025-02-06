@@ -12,18 +12,22 @@ services:
   ingestion:
     build:
       context: .
-      dockerfile: src/data/Dockerfile
+      dockerfile: src/data/Dockerfile-ingestion
     container_name: ingestion_service
     volumes:
       - ./data/raw:/app/data/raw
       - ./.dvc:/app/.dvc
       - ./.git:/app/.git
-    command: ["dvc", "repro", "one_hot_encode_labels"]
+    ports:
+      - "8100:8100"    
+    networks:
+      - back-tier
+    command: ["uvicorn", "src.data.ingestion:app", "--host", "0.0.0.0", "--port", "8100"]
 
   training:
     build:
       context: .
-      dockerfile: src/models/Dockerfile
+      dockerfile: src/models/Dockerfile-training
     container_name: training_service
     restart: on-failure  #  let the training service fail if the ingestion service has not completed and then restart it after the ingestion service finishes
     depends_on:
@@ -33,7 +37,40 @@ services:
       - ./models:/app/models
       - ./.dvc:/app/.dvc
       - ./.git:/app/.git
-    command: ["sh", "-c", "dvc repro --downstream setup_callbacks"]
+    ports:
+      - "8200:8200"
+    networks:
+      - back-tier
+    command: ["uvicorn", "src.models.training:app", "--host", "0.0.0.0", "--port", "8200"]
+
+  prediction:
+    build:
+      context: .
+      dockerfile: src/api/Dockerfile-prediction
+    container_name: prediction_service
+    depends_on:
+      - training
+    ports:
+      - 8300:8300
+    networks:
+      - back-tier
+    # The prediction service will load the latest MLflow model and expose an endpoint.
+    command: ["uvicorn", "src.api.prediction:app", "--host", "0.0.0.0", "--port", "8300"]
+
+  gateway:  # Fixed indentation
+    build:
+      context: .
+      dockerfile: src/api/Dockerfile-gateway
+    container_name: gateway_service
+    depends_on:
+      - training
+      - prediction
+      - ingestion
+    ports:
+      - "8000:8000"
+    networks:
+      - back-tier
+    command: ["uvicorn", "src.api.gateway:app", "--host", "0.0.0.0", "--port", "8000"]
 
   tests:
     build:
@@ -48,18 +85,6 @@ services:
       - ./.dvc:/app/.dvc       # DVC configuration
       - ./.git:/app/.git       # Git repository
     command: ["python", "-m", "unittest", "discover", "-s", "tests", "-p", "*.py"]
-
-  prediction:
-    build:
-      context: .
-      dockerfile: src/api/Dockerfile
-    container_name: prediction_service
-    depends_on:
-      - training
-    ports:
-      - 8000:8000
-    networks:
-      - back-tier
 
   prometheus:
     image: prom/prometheus:v2.36.2
