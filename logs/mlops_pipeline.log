@@ -1,0 +1,37 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20250204162305
+Username: DESKTOP-GFNO466\Besitzer
+RunAs User: DESKTOP-GFNO466\Besitzer
+Configuration Name: 
+Machine: DESKTOP-GFNO466 (Microsoft Windows NT 10.0.22631.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File run_mlops_pipeline.ps1
+Process ID: 35072
+PSVersion: 5.1.22621.4391
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.22621.4391
+BuildVersion: 10.0.22621.4391
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is logs\mlops_pipeline.log
+2025-02-04 16:23:05 [INFO] Starting MLOps pipeline execution...
+2025-02-04 16:23:05 [INFO] Running ingestion service...
+
+2025-02-04 16:23:18 [INFO] Running training service...
+time="2025-02-04T16:23:18+01:00" level=warning msg="C:\\Users\\Besitzer\\Desktop\\dataScientest\\MLOps\\Project\\ubuntu\\OCR_Handwritting_MLOps\\docker-compose.yml: the attribute `version` is obsolete, it will be ignor
+ed, please remove it to avoid potential confusion"
+[+] Running 2/2
+ ✔ Container ingestion_service  Running                                                                                                                                                                              0.0s
+ ✔ Container training_service   Started                                                                                                                                                                              0.8s
+2025-02-04 16:23:29 [INFO] Running prediction service...
+ ✔ Container prediction_service              Started                                                                                                                                                                 0.8s
+2025-02-04 16:23:40 [INFO] Starting monitoring services...
+
+2025-02-04 16:23:45 [INFO] MLOps pipeline execution completed.
+**********************
+Windows PowerShell transcript end
+End time: 20250204162345
+**********************
