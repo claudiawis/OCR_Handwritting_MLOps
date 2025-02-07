@@ -1,0 +1,25 @@
+# Dockerfile-prediction
+
+# Dockerfile-ingestion
+FROM python:3.11
+
+WORKDIR /app
+
+# Copy the ingestion FastAPI app and related modules
+COPY src/data/ingestion.py ./src/data/
+COPY src/data/requirements.txt ./requirements.txt
+
+# Copy additional necessary files (dvc.yaml, dvc.lock, etc.)
+COPY dvc.yaml ./
+COPY dvc.lock ./
+COPY .gitignore ./
+COPY .dvcignore ./
+
+# Install the required Python packages
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose the port that the FastAPI app will run on (8100)
+EXPOSE 8100
+
+# Run the ingestion FastAPI app using uvicorn
+CMD ["uvicorn", "src.data.ingestion:app", "--host", "0.0.0.0", "--port", "8100"]
