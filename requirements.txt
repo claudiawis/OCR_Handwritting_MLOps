@@ -43,3 +43,6 @@ httpx
 
 # Prometheus Integration
 prometheus-fastapi-instrumentator==6.1.0
+
+# For password hashing
+passlib[bcrypt]
