@@ -45,4 +45,5 @@ httpx
 prometheus-fastapi-instrumentator==6.1.0
 
 # For password hashing
+bcrypt==3.2.0
 passlib[bcrypt]
