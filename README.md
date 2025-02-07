@@ -202,9 +202,14 @@ After training your model, you can deploy an inference API using **FastAPI**. Th
 
 The FastAPI application is located in the `src/api/api.py` file. You can run the API server using **uvicorn**, a lightweight ASGI server. Use the following command from the main directory:
 
-    uvicorn src.api.api:app --reload
+    uvicorn src.api.gateway:app --reload
 
 Then open your browser at http://localhost:8000/docs to access the FastAPI interactive docs.
+
+You will be asked to authenticate yourself as the gateway is secured. Additionally there is an underlying role permissions logic hence you can choose:
+user for access to prediction only: username - user1 and password - 1resu
+OR
+admin for access to ingestion, (re)training and prediction: username - admin1 and password - 1nimda
 
 ## Unit Tests
 This section describes the steps required to run unit tests, ensuring that the code functions as expected.
