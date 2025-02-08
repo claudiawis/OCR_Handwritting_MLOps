@@ -59,15 +59,15 @@ jobs:
 
       - name: Build and Push Data Ingestion Service
         run: |
-          docker build -t claudiawis/ocr_handwritting_mlops/data_ingestion_service:latest -f src/data/Dockerfile .
-          docker push claudiawis/ocr_handwritting_mlops:data_ingestion_service
+          docker build -t claudiawis/ocr_handwritting_mlops/ocr_handwritting_mlops/data_ingestion_service:latest -f src/data/Dockerfile .
+          docker push claudiawis/ocr_handwritting_mlops/ocr_handwritting_mlops:data_ingestion_service
 
       - name: Build and Push Model Training Service
         run: |
-          docker build -t claudiawis/model_training_service:latest -f src/models/Dockerfile .
-          docker push claudiawis/ocr_handwritting_mlops:data_training_service
+          docker build -t claudiawis/ocr_handwritting_mlops/model_training_service:latest -f src/models/Dockerfile .
+          docker push claudiawis/ocr_handwritting_mlops/ocr_handwritting_mlops:data_training_service
 
       - name: Build and Push Prediction Service
         run: |
-          docker build -t claudiawis/prediction_service:latest -f src/api/Dockerfile .
-          docker push claudiawis/ocr_handwritting_mlops:data_ingestion_service
+          docker build -t claudiawis/ocr_handwritting_mlops/prediction_service:latest -f src/api/Dockerfile .
+          docker push claudiawis/ocr_handwritting_mlops/ocr_handwritting_mlops:data_ingestion_service
