@@ -49,6 +49,10 @@ jobs:
           fi
           # Add more checks as needed for your files
 
+      - name: Reproduce DVC Pipeline
+        run: |
+          dvc repro  # Reproduce the DVC pipeline to ensure all data is processed correctly
+
       - name: Run Tests
         run: |
           python -m unittest discover -s tests -p '*.py'  # Adjust this command based on your test framework
