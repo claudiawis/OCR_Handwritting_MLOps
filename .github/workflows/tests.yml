@@ -1,4 +1,4 @@
-name: CI Tests
+name: CI Tests and Docker Build
 
 on:
   push:
@@ -36,7 +36,6 @@ jobs:
 
       - name: Check for Missing Files
         run: |
-          # List expected files to verify if they exist
           echo "Checking for missing DVC files..."
           if [ ! -f data/processed/cleaned_data.csv ]; then
             echo "Warning: cleaned_data.csv is missing!"
@@ -47,7 +46,6 @@ jobs:
           if [ ! -f data/processed/X_train.npy ]; then
             echo "Warning: X_train.npy is missing!"
           fi
-          # Add more checks as needed for your files
 
       - name: Reproduce DVC Pipeline
         run: |
@@ -56,3 +54,30 @@ jobs:
       - name: Run Tests
         run: |
           python -m unittest discover -s tests -p '*.py'  # Adjust this command based on your test framework
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2  # Updated to the latest version
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Tag Data Ingestion Service
+        run: |
+          docker build -t claudiawis/ocr_handwritting_mlops:data_ingestion_service -f src/data/Dockerfile .
+          docker tag claudiawis/ocr_handwritting_mlops:data_ingestion_service claudiawis/ocr_handwritting_mlops:data_ingestion_service_latest
+          docker push claudiawis/ocr_handwritting_mlops:data_ingestion_service
+          docker push claudiawis/ocr_handwritting_mlops:data_ingestion_service_latest
+
+      - name: Build and Tag Model Training Service
+        run: |
+          docker build -t claudiawis/ocr_handwritting_mlops:model_training_service -f src/models/Dockerfile .
+          docker tag claudiawis/ocr_handwritting_mlops:model_training_service claudiawis/ocr_handwritting_mlops:model_training_service_latest
+          docker push claudiawis/ocr_handwritting_mlops:model_training_service
+          docker push claudiawis/ocr_handwritting_mlops:model_training_service_latest
+
+      - name: Build and Tag Prediction Service
+        run: |
+          docker build -t claudiawis/ocr_handwritting_mlops:prediction_service -f src/api/Dockerfile .
+          docker tag claudiawis/ocr_handwritting_mlops:prediction_service claudiawis/ocr_handwritting_mlops:prediction_service_latest
+          docker push claudiawis/ocr_handwritting_mlops:prediction_service
+          docker push claudiawis/ocr_handwritting_mlops:prediction_service_latest
