@@ -1,6 +1,4 @@
-# Dockerfile-prediction
-
-# Dockerfile-ingestion
+# Use the official Python base image
 FROM python:3.11
 
 WORKDIR /app
@@ -15,8 +13,12 @@ COPY dvc.lock ./
 COPY .gitignore ./
 COPY .dvcignore ./
 
-# Install the required Python packages
-RUN pip install --no-cache-dir -r requirements.txt
+# Install required system packages and Python dependencies in a single RUN command
+RUN apt-get update && \
+    apt-get install -y git && \
+    pip install --no-cache-dir -r requirements.txt && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Expose the port that the FastAPI app will run on (8100)
 EXPOSE 8100
