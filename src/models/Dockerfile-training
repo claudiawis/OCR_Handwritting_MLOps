@@ -16,8 +16,7 @@ COPY src/models/requirements.txt ./requirements.txt
 COPY dvc.yaml ./
 COPY dvc.lock ./          
 COPY .gitignore ./        
-COPY .dvcignore ./
-COPY metrics/ ./metrics/        
+COPY .dvcignore ./        
 
 
 # Install the required Python packages
