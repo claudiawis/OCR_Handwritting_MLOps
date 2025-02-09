@@ -75,7 +75,7 @@ services:
   tests:
     build:
       context: .
-      dockerfile: tests/Dockerfile
+      dockerfile: tests/Dockerfile-tests
     container_name: test_service
     volumes:
       - ./data:/app/data/
