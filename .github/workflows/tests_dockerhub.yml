@@ -96,3 +96,9 @@ jobs:
           docker build -t claudiawis/ocr_handwritting_mlops:gateway_service -f src/api/Dockerfile-gateway .
           docker tag claudiawis/ocr_handwritting_mlops:gateway_service claudiawis/ocr_handwritting_mlops:gateway_service
           docker push claudiawis/ocr_handwritting_mlops:gateway_service
+
+      - name: Build and Tag Tests Service
+        run: |
+          docker build -t claudiawis/ocr_handwritting_mlops:tests_service -f tests/Dockerfile-tests .
+          docker tag claudiawis/ocr_handwritting_mlops:tests_service claudiawis/ocr_handwritting_mlops:tests_service
+          docker push claudiawis/ocr_handwritting_mlops:tests_service
