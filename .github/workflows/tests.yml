@@ -81,3 +81,10 @@ jobs:
           docker tag claudiawis/ocr_handwritting_mlops:prediction_service claudiawis/ocr_handwritting_mlops:prediction_service_latest
           docker push claudiawis/ocr_handwritting_mlops:prediction_service
           docker push claudiawis/ocr_handwritting_mlops:prediction_service_latest
+
+      - name: Build and Tag Gateway Service
+        run: |
+          docker build -t claudiawis/ocr_handwritting_mlops:gateway_service -f src/api/Dockerfile-gateway .
+          docker tag claudiawis/ocr_handwritting_mlops:gateway_service claudiawis/ocr_handwritting_mlops:gateway_service_latest
+          docker push claudiawis/ocr_handwritting_mlops:gateway_service
+          docker push claudiawis/ocr_handwritting_mlops:gateway_service_latest
