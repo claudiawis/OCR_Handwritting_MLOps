@@ -80,7 +80,6 @@ services:
     volumes:
       - ./data:/app/data/
       - ./models:/app/models
-      - ./metrics:/app/metrics
       - ./tests:/app/tests      # Local tests directory
       - ./.dvc:/app/.dvc       # DVC configuration
       - ./.git:/app/.git       # Git repository
