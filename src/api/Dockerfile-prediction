@@ -1,3 +1,5 @@
+# Dockerfile-prediction
+
 # Use the official Python base image
 FROM python:3.11
 
@@ -10,12 +12,11 @@ COPY ./src/api ./src/api
 # Copy the requirements file
 COPY ./src/api/requirements.txt ./requirements.txt
 
-# Install required system packages and Python dependencies in a single RUN command
-RUN apt-get update && \
-    apt-get install -y git && \
-    pip install --no-cache-dir -r requirements.txt && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# Install required system packages
+RUN apt-get update && apt-get install -y git
+
+# Install the required Python packages
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose the port for the API
 EXPOSE 8300
