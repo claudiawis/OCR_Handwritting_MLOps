@@ -63,21 +63,21 @@ jobs:
 
       - name: Build and Tag Data Ingestion Service
         run: |
-          docker build -t claudiawis/ocr_handwritting_mlops:data_ingestion_service -f src/data/Dockerfile .
+          docker build -t claudiawis/ocr_handwritting_mlops:data_ingestion_service -f src/data/Dockerfile-ingestion .
           docker tag claudiawis/ocr_handwritting_mlops:data_ingestion_service claudiawis/ocr_handwritting_mlops:data_ingestion_service_latest
           docker push claudiawis/ocr_handwritting_mlops:data_ingestion_service
           docker push claudiawis/ocr_handwritting_mlops:data_ingestion_service_latest
 
       - name: Build and Tag Model Training Service
         run: |
-          docker build -t claudiawis/ocr_handwritting_mlops:model_training_service -f src/models/Dockerfile .
+          docker build -t claudiawis/ocr_handwritting_mlops:model_training_service -f src/models/Dockerfile-training .
           docker tag claudiawis/ocr_handwritting_mlops:model_training_service claudiawis/ocr_handwritting_mlops:model_training_service_latest
           docker push claudiawis/ocr_handwritting_mlops:model_training_service
           docker push claudiawis/ocr_handwritting_mlops:model_training_service_latest
 
       - name: Build and Tag Prediction Service
         run: |
-          docker build -t claudiawis/ocr_handwritting_mlops:prediction_service -f src/api/Dockerfile .
+          docker build -t claudiawis/ocr_handwritting_mlops:prediction_service -f src/api/Dockerfile-prediction .
           docker tag claudiawis/ocr_handwritting_mlops:prediction_service claudiawis/ocr_handwritting_mlops:prediction_service_latest
           docker push claudiawis/ocr_handwritting_mlops:prediction_service
           docker push claudiawis/ocr_handwritting_mlops:prediction_service_latest
