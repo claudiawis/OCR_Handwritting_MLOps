@@ -33,19 +33,23 @@ OCR_Handwriting_MLOps<br>
 │   │   ├── `reshape_data.py`            <- Reshapes data to fit the input requirements of the deep learning model<br>
 │   │   ├── `calculate_class_weights.py` <- Computes class weights to handle class imbalance in training<br>
 │   │   ├── `one_hot_encode_labels.py`   <- Applies one-hot encoding to categorical labels<br>
-│   │   ├── `Dockerfile`                 <- Dockerfile for the data ingestion pipeline<br>
+│   │   ├── `ingestion.py`               <- FastAPI app exposing an '/ingest' endpoint to trigger the DVC pipeline stage for data ingestion.<br>
+│   │   ├── `Dockerfile-ingestion`       <- Dockerfile for the data ingestion pipeline<br>
 │   │   └── `requirements.txt`           <- Dependencies required for running the ingestion service<br>
 │   │<br>
 │   ├── **models/**<br>
 │   │   ├── `setup_callbacks.py`         <- Defines training callbacks<br>
 │   │   ├── `build_train_cnn.py`         <- Builds and trains the CNN model<br>
 │   │   ├── `evaluate_model.py`          <- Evaluates model performance<br>
-│   │   ├── `Dockerfile`                 <- Dockerfile for model training and inference pipeline<br>
+│   │   ├── `training.py`                <- FastAPI app exposing a '/train' endpoint to trigger the training pipeline via DVC.<br>
+│   │   ├── `Dockerfile-training`        <- Dockerfile for model training and inference pipeline<br>
 │   │   └── `requirements.txt`           <- Dependencies required for running the training service<br>
 │   │<br>
 │   ├── **api/**                         <- Scripts for prediction microservice and FastAPI endpoints<br>
-│   │   ├── `api.py`                     <- Loads model and API endpoints for prediction and retraining<br>
-│   │   ├── `Dockerfile`                 <- Dockerfile for the prediction microservice<br>
+│   │   ├── `prediction.py`              <- Loads OCR model and define API '/predict' endpoints for prediction<br>
+│   │   ├── `gateway.py`                 <- Implements authentication, role-based access control, and request distribution for prediction, training, and ingestion services<br>
+│   │   ├── `Dockerfile-prediction`      <- Dockerfile for the prediction microservice<br>
+│   │   ├── `Dockerfile-gateway`         <- Dockerfile for the Gateway Service<br>
 │   └   └── `requirements.txt`           <- Dependencies required for running the prediction service<br>
 │<br>
 ├── **data/**                            <- Directory for storing raw and processed data<br>
@@ -76,11 +80,18 @@ OCR_Handwriting_MLOps<br>
 │<br>
 ├── **tests/**                           <- Contains unit test scripts<br>
 │   ├── **test_data/**                   <- Unit test scripts for the data ingestion service<br>
-│   └── **test_models/**                 <- Unit test scripts for the model training service<br>
+│   ├── **test_models/**                 <- Unit test scripts for the model training service<br>
+│   └── `Dockerfile-tests`               <- Dockerfile for the test Service<br>
 │<br>
 ├── **docs/**                            <- Documentation for the project<br>
 │<br>
 ├── **logs/**                            <- Storing application runtime logs<br>
+│<br>
+├── **.dvc/**                            <- stores stores metadata for DVC-tracked files, cache, and configurations<br>
+│<br>
+├── **.github/**                         <- Files and folders to be excluded from Git version control<br>
+│   ├── **workflow/**                    <- Unit test scripts for the data ingestion service<br>
+│   └   └── `test.yml`                   <- CI workflow to install dependencies, pull DVC data, check files, and run tests<br>
 │<br>
 ├── `.gitignore`                         <- Files and folders to be excluded from Git version control<br>
 ├── `.dvcignore`                         <- Files and folders to be excluded from DVC tracking<br>
@@ -96,8 +107,48 @@ OCR_Handwriting_MLOps<br>
 
 ## Architecture Diagram
 
-## The App
+The **Gateway Service** acts as a central API that routes requests to the **Ingestion**, **Training**, and **Prediction** services. It ensures that only authorized users can access specific endpoints.
+
+To access the Gateway, open your browser and go to: **[http://localhost:8000](http://localhost:8000)**  
+
+The table below summarizes the access control for each service:
+
+| Service   | Access Level |  Username | Password |
+|-----------|-------------|----------|----------|
+| **Prediction** | All Users   |  `user1`  | `1resu`  |
+| **Ingestion** | Admins Only  |  `admin1`  | `1nimda`  |
+| **Training**  | Admins Only  |  `admin1`  | `1nimda`  |
+
+
+### API Endpoints:
+Below is a screenshot illustrating the available endpoints:
+
+![Gateway API Endpoints](docs/images/API2.png)
+
 
 ## Grafana for Monitor
 
-## All Ports
+The project includes **Grafana** for real-time monitoring and visualization of system metrics. Grafana is configured to track the performance of the ingestion, training, and prediction services, as well as resource usage (CPU, memory, and network activity).
+
+Below is a screenshot of the Grafana dashboard:
+
+![Monitoring](docs/images/Prometheus_Grafana.png)
+
+To access Grafana, open your browser and go to:**[http://localhost:3000](http://localhost:3000)**
+
+**Default Credentials:**
+- **Username:** `admin`
+- **Password:** `admin` (Change this after first login!)
+
+## Service Ports Summary
+
+| Service       | Container Name       | Port (Host:Container) |
+|--------------|----------------------|-----------------------|
+| Gateway      | gateway_service       | 8000:8000            |
+| Ingestion    | ingestion_service     | 8100:8100            |
+| Training     | training_service      | 8200:8200            |
+| Prediction   | prediction_service    | 8300:8300            |
+| Prometheus   | prometheus_service    | 9090:9090            |
+| Grafana      | grafana_service       | 3000:3000            |
+
+> **Note:** These ports are based on `docker-compose.yml`.
