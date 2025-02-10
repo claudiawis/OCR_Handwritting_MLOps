@@ -107,8 +107,48 @@ OCR_Handwriting_MLOps<br>
 
 ## Architecture Diagram
 
-## The App
+The **Gateway Service** acts as a central API that routes requests to the **Ingestion**, **Training**, and **Prediction** services. It ensures that only authorized users can access specific endpoints.
+
+To access the Gateway, open your browser and go to: **[http://localhost:8000](http://localhost:8000)**  
+
+The table below summarizes the access control for each service:
+
+| Service   | Access Level |  Username | Password |
+|-----------|-------------|----------|----------|
+| **Prediction** | All Users   |  `user1`  | `1resu`  |
+| **Ingestion** | Admins Only  |  `admin1`  | `1nimda`  |
+| **Training**  | Admins Only  |  `admin1`  | `1nimda`  |
+
+
+### API Endpoints:
+Below is a screenshot illustrating the available endpoints:
+
+![Gateway API Endpoints](docs/images/API2.png)
+
 
 ## Grafana for Monitor
 
-## All Ports
+The project includes **Grafana** for real-time monitoring and visualization of system metrics. Grafana is configured to track the performance of the ingestion, training, and prediction services, as well as resource usage (CPU, memory, and network activity).
+
+Below is a screenshot of the Grafana dashboard:
+
+![Monitoring](docs/images/Prometheus_Grafana.png)
+
+To access Grafana, open your browser and go to:**[http://localhost:3000](http://localhost:3000)**
+
+**Default Credentials:**
+- **Username:** `admin`
+- **Password:** `admin` (Change this after first login!)
+
+## Service Ports Summary
+
+| Service       | Container Name       | Port (Host:Container) |
+|--------------|----------------------|-----------------------|
+| Gateway      | gateway_service       | 8000:8000            |
+| Ingestion    | ingestion_service     | 8100:8100            |
+| Training     | training_service      | 8200:8200            |
+| Prediction   | prediction_service    | 8300:8300            |
+| Prometheus   | prometheus_service    | 9090:9090            |
+| Grafana      | grafana_service       | 3000:3000            |
+
+> **Note:** These ports are based on `docker-compose.yml`.
