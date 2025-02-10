@@ -107,9 +107,25 @@ OCR_Handwriting_MLOps<br>
 
 ## Architecture Diagram
 
+The diagram below illustrates the overall architecture of the project. It consists of multiple Docker services orchestrated together, including ingestion, training, and prediction, all managed under GitHub Actions and DagsHub.  
+
+- **Gateway**: Manages authentication and authorization for all requests.  
+- **Ingestion Service**: Handles data collection and preprocessing.  
+- **Training Service**: Trains machine learning models using the ingested data.  
+- **Prediction Service**: Provides model inference for users.  
+- **MLflow**: Tracks experiments and model versions.  
+- **Monitoring**: Automate system health checks.
+- **Cron Jobs**: Automate retraining and system health checks.   
+
+![Architecture](docs/images/architecture.png)
+
+## API Endpoints:
+
 The **Gateway Service** acts as a central API that routes requests to the **Ingestion**, **Training**, and **Prediction** services. It ensures that only authorized users can access specific endpoints.
 
 To access the Gateway, open your browser and go to: **[http://localhost:8000](http://localhost:8000)**  
+
+![Gateway API Endpoints](docs/images/API2.png)
 
 The table below summarizes the access control for each service:
 
@@ -120,10 +136,6 @@ The table below summarizes the access control for each service:
 | **Training**  | Admins Only  |  `admin1`  | `1nimda`  |
 
 
-### API Endpoints:
-Below is a screenshot illustrating the available endpoints:
-
-![Gateway API Endpoints](docs/images/API2.png)
 
 
 ## Grafana for Monitor
