@@ -59,4 +59,4 @@ scrape_configs:
     scrape_interval: 10s
     static_configs:
       - targets:
-          - prediction_service:8000
+          - prediction_service:8300
