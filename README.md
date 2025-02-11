@@ -23,7 +23,7 @@ The solution is intended for industries such as **insurance, healthcare, and adm
     OCR_Handwriting_MLOps
     ├── src/                               <- Source code for the OCR pipeline
     │   │
-    │   ├── data/
+    │   ├── data/                          <- Scripts for the ingestion stage, including loading data and preprocessing
     │   │   ├── extract_raw_data.py        <- Extracts the raw data from the compressed dataset
     │   │   ├── load_dataset.py            <- Loads the dataset into memory
     │   │   ├── filter_data.py             <- Filters out unwanted or corrupted data samples
@@ -38,7 +38,7 @@ The solution is intended for industries such as **insurance, healthcare, and adm
     │   │   ├── Dockerfile-ingestion       <- Dockerfile for the data ingestion pipeline
     │   │   └── requirements.txt           <- Dependencies required for running the ingestion service
     │   │
-    │   ├── models/
+    │   ├── models/                        <- Scripts for the training stage
     │   │   ├── setup_callbacks.py         <- Defines training callbacks
     │   │   ├── build_train_cnn.py         <- Builds and trains the CNN model
     │   │   ├── evaluate_model.py          <- Evaluates model performance
