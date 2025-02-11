@@ -1,5 +1,7 @@
 # Handwritten Text Recognition Using Deep Learning (OCR MLOps Project)
 
+> **Note:** This is a general overview of the project. For technical details and commands to reproduce the work, please refer to the [Technical Guide](TECHNICAL_GUIDE.md).
+
 ## Introduction
 
 Handwritten text recognition (HTR) is a crucial step in document digitization, allowing computers to extract and process handwritten text from images. This project aims to develop an end-to-end **Optical Character Recognition (OCR)** system for handwritten documents, leveraging **deep learning techniques** and **MLOps principles** to ensure efficient model deployment and maintenance.
@@ -17,93 +19,92 @@ This project is designed to integrate **automated pipelines** for:
 The solution is intended for industries such as **insurance, healthcare, and administrative services**, where the digitization of handwritten documents is essential for efficiency and cost reduction.
 
 ## Project Organization
-  
-OCR_Handwriting_MLOps<br>
-│<br>
-├── **src/**                             <- Source code for the OCR pipeline<br>
-│<br>
-│   ├── **data/**<br>
-│   │   ├── `extract_raw_data.py`        <- Extracts the raw data from the compressed dataset<br>
-│   │   ├── `load_dataset.py`            <- Loads the dataset into memory<br>
-│   │   ├── `filter_data.py`             <- Filters out unwanted or corrupted data samples<br>
-│   │   ├── `clean_data.py`              <- Cleans and preprocesses raw text/image data<br>
-│   │   ├── `encode_data.py`             <- Encodes categorical or textual data into numerical format<br>
-│   │   ├── `prepare_features.py`        <- Prepares feature vectors for model training<br>
-│   │   ├── `split_data.py`              <- Splits the dataset into training and test sets<br>
-│   │   ├── `reshape_data.py`            <- Reshapes data to fit the input requirements of the deep learning model<br>
-│   │   ├── `calculate_class_weights.py` <- Computes class weights to handle class imbalance in training<br>
-│   │   ├── `one_hot_encode_labels.py`   <- Applies one-hot encoding to categorical labels<br>
-│   │   ├── `ingestion.py`               <- FastAPI app exposing an '/ingest' endpoint to trigger the DVC pipeline stage for data ingestion.<br>
-│   │   ├── `Dockerfile-ingestion`       <- Dockerfile for the data ingestion pipeline<br>
-│   │   └── `requirements.txt`           <- Dependencies required for running the ingestion service<br>
-│   │<br>
-│   ├── **models/**<br>
-│   │   ├── `setup_callbacks.py`         <- Defines training callbacks<br>
-│   │   ├── `build_train_cnn.py`         <- Builds and trains the CNN model<br>
-│   │   ├── `evaluate_model.py`          <- Evaluates model performance<br>
-│   │   ├── `training.py`                <- FastAPI app exposing a '/train' endpoint to trigger the training pipeline via DVC.<br>
-│   │   ├── `Dockerfile-training`        <- Dockerfile for model training and inference pipeline<br>
-│   │   └── `requirements.txt`           <- Dependencies required for running the training service<br>
-│   │<br>
-│   ├── **api/**                         <- Scripts for prediction microservice and FastAPI endpoints<br>
-│   │   ├── `prediction.py`              <- Loads OCR model and define API '/predict' endpoints for prediction<br>
-│   │   ├── `gateway.py`                 <- Implements authentication, role-based access control, and request distribution for prediction, training, and ingestion services<br>
-│   │   ├── `Dockerfile-prediction`      <- Dockerfile for the prediction microservice<br>
-│   │   ├── `Dockerfile-gateway`         <- Dockerfile for the Gateway Service<br>
-│   └   └── `requirements.txt`           <- Dependencies required for running the prediction service<br>
-│<br>
-├── **data/**                            <- Directory for storing raw and processed data<br>
-│<br>
-│   ├── **processed/**                   <- Processed data<br>
-│   │   └── `.gitignore`                 <- Files to be excluded from Git version control dataset<br>
-│   │<br>
-│   ├── **raw/**                         <- Raw data<br>
-│   │   ├── `.gitignore`                 <- Files to be excluded from Git version control dataset<br>
-│   │   ├── **raw_data/data/raw/**       <- Extracted data<br>
-│   │   │   ├── **words/**               <- Extracted images<br>
-│   └   └── **ascii/**                   <- Extracted metadata<br>
-│<br>
-├── **models/**                          <- Saved trained models<br>
-│<br>
-├── **prometheus_data/**                 <- Stores Prometheus configuration and monitoring data<br>
-│   ├── `alerting_rules`                 <- Defines alerting rules for triggering notifications<br>
-│   └── `prometheus.yml`                 <- Prometheus configuration file<br>
-│<br>
-├── **grafana_data/**                    <- Stores Grafana-related configuration and data<br>
-│   ├── **provisioning/**<br>
-│   │   ├── **dashboards/**<br>
-│   │   │   └── `dashboards.yaml`        <- Specifies available dashboards configuration<br>
-│   │   ├── **datasources/**<br>
-│   └   └   └── `datasource.yml`         <- Specifies data source configuration<br>
-│<br>
-├── **alertmanager/**                    <- Configures alerting rules for system failures<br>
-│<br>
-├── **tests/**                           <- Contains unit test scripts<br>
-│   ├── **test_data/**                   <- Unit test scripts for the data ingestion service<br>
-│   ├── **test_models/**                 <- Unit test scripts for the model training service<br>
-│   └── `Dockerfile-tests`               <- Dockerfile for the test Service<br>
-│<br>
-├── **docs/**                            <- Documentation for the project<br>
-│<br>
-├── **logs/**                            <- Storing application runtime logs<br>
-│<br>
-├── **.dvc/**                            <- stores stores metadata for DVC-tracked files, cache, and configurations<br>
-│<br>
-├── **.github/**                         <- Files and folders to be excluded from Git version control<br>
-│   ├── **workflow/**                    <- Unit test scripts for the data ingestion service<br>
-│   └   └── `test.yml`                   <- CI workflow to install dependencies, pull DVC data, check files, and run tests<br>
-│<br>
-├── `.gitignore`                         <- Files and folders to be excluded from Git version control<br>
-├── `.dvcignore`                         <- Files and folders to be excluded from DVC tracking<br>
-├── `.dockerignore`                      <- Files and folders to be excluded from Docker builds<br>
-├── `docker-compose.yml`                 <- Runs containerized services (API, database, monitoring)<br>
-├── `dvc.lock`                           <- DVC metadata tracking file<br>
-├── `dvc.yaml`                           <- Defines DVC pipeline stages <br>
-├── `run_mlops_pipeline.ah`              <- Automates the pipeline in Linux (prompt command)<br>
-├── `run_mlops_pipeline.ps1`             <- Automates the pipeline in Windows (PowerShell)<br>
-├── `requirements.txt`                   <- Dependencies required for running the project<br>
-├── `TECHNICAL_GUIDE.md`                 <- Detailed technical guide<br>
-└── `README.md`                          <- Project overview<br>
+
+    OCR_Handwriting_MLOps
+    ├── src/                               <- Source code for the OCR pipeline
+    │   │
+    │   ├── data/                          <- Scripts for the ingestion stage, including loading data and preprocessing
+    │   │   ├── extract_raw_data.py        <- Extracts the raw data from the compressed dataset
+    │   │   ├── load_dataset.py            <- Loads the dataset into memory
+    │   │   ├── filter_data.py             <- Filters out unwanted or corrupted data samples
+    │   │   ├── clean_data.py              <- Cleans and preprocesses raw text/image data
+    │   │   ├── encode_data.py             <- Encodes categorical or textual data into numerical format
+    │   │   ├── prepare_features.py        <- Prepares feature vectors for model training
+    │   │   ├── split_data.py              <- Splits the dataset into training and test sets
+    │   │   ├── reshape_data.py            <- Reshapes data to fit the input requirements of the deep learning model
+    │   │   ├── calculate_class_weights.py <- Computes class weights to handle class imbalance in training
+    │   │   ├── one_hot_encode_labels.py   <- Applies one-hot encoding to categorical labels
+    │   │   ├── ingestion.py               <- FastAPI app exposing an '/ingest' endpoint to trigger the DVC pipeline stage for data ingestion.
+    │   │   ├── Dockerfile-ingestion       <- Dockerfile for the data ingestion pipeline
+    │   │   └── requirements.txt           <- Dependencies required for running the ingestion service
+    │   │
+    │   ├── models/                        <- Scripts for the training stage
+    │   │   ├── setup_callbacks.py         <- Defines training callbacks
+    │   │   ├── build_train_cnn.py         <- Builds and trains the CNN model
+    │   │   ├── evaluate_model.py          <- Evaluates model performance
+    │   │   ├── training.py                <- FastAPI app exposing a '/train' endpoint to trigger the training pipeline via DVC.
+    │   │   ├── Dockerfile-training        <- Dockerfile for model training and inference pipeline
+    │   │   └── requirements.txt           <- Dependencies required for running the training service
+    │   │
+    │   ├── api/                           <- Scripts for prediction microservice and FastAPI endpoints
+    │   │   ├── prediction.py              <- Loads OCR model and define API '/predict' endpoints for prediction
+    │   │   ├── gateway.py                 <- Implements authentication, role-based access control, and request distribution for prediction, training, and ingestion services
+    │   │   ├── Dockerfile-prediction      <- Dockerfile for the prediction microservice
+    │   │   ├── Dockerfile-gateway         <- Dockerfile for the Gateway service
+    │   └   └── requirements.txt           <- Dependencies required for running the prediction service
+    │
+    ├── data/                              <- Directory for storing raw and processed data
+    │
+    │   ├── processed/                     <- Processed data
+    │   │   └── .gitignore                 <- Files to be excluded from Git version control dataset
+    │   │
+    │   ├── raw/                           <- Raw data
+    │   │   ├── .gitignore                 <- Files to be excluded from Git version control dataset
+    │   │   ├── raw_data/data/raw/         <- Extracted data
+    │   │   │   ├── words/                 <- Extracted images
+    │   └   └── ascii/                     <- Extracted metadata
+    │
+    ├── models/                            <- Saved trained models
+    │
+    ├── prometheus_data/                   <- Stores Prometheus configuration and monitoring data
+    │   ├── alerting_rules                 <- Defines alerting rules for triggering notifications
+    │   └── prometheus.yml                 <- Prometheus configuration file
+    │
+    ├── grafana_data/                      <- Stores Grafana-related configuration and data
+    │   ├── provisioning/
+    │   │   ├── dashboards/
+    │   │   │   └── dashboards.yaml        <- Specifies available dashboards configuration
+    │   │   ├── datasources/
+    │   └   └   └── datasource.yml         <- Specifies data source configuration
+    │
+    ├── alertmanager/                      <- Configures alerting rules for system failures
+    │
+    ├── tests/                             <- Contains unit test scripts
+    │   ├── test_data/                     <- Unit test scripts for the data ingestion service
+    │   ├── test_models/                   <- Unit test scripts for the model training service
+    │   └── Dockerfile-tests               <- Dockerfile for the test service
+    │
+    ├── docs/                              <- Documentation for the project
+    │
+    ├── logs/                              <- Storing application runtime logs
+    │
+    ├── .dvc/                              <- stores stores metadata for DVC-tracked files, cache, and configurations
+    │
+    ├── .github/                           <- Files and folders to be excluded from Git version control
+    │   ├── workflow/                      <- Unit test scripts for the data ingestion service
+    │   └   └── test.yml                   <- CI workflow to install dependencies, pull DVC data, check files, and run tests
+    │
+    ├── .gitignore                         <- Files and folders to be excluded from Git version control
+    ├── .dvcignore                         <- Files and folders to be excluded from DVC tracking
+    ├── .dockerignore                      <- Files and folders to be excluded from Docker builds
+    ├── docker-compose.yml                 <- Runs containerized services (API, database, monitoring)
+    ├── dvc.lock                           <- DVC metadata tracking file
+    ├── dvc.yaml                           <- Defines DVC pipeline stages 
+    ├── run_mlops_pipeline.ah              <- Automates the pipeline in Linux (prompt command)
+    ├── run_mlops_pipeline.ps1             <- Automates the pipeline in Windows (PowerShell)
+    ├── requirements.txt                   <- Dependencies required for running the project
+    ├── TECHNICAL_GUIDE.md                 <- Detailed technical guide
+    └── README.md                          <- Project overview
 
 ## Architecture Diagram
 
@@ -115,9 +116,15 @@ The diagram below illustrates the overall architecture of the project. It consis
 - **Prediction Service**: Provides model inference for users.  
 - **MLflow**: Tracks experiments and model versions.  
 - **Monitoring**: Automate system health checks.
-- **Cron Jobs**: Automate retraining and system health checks.   
+- **Cron Jobs**: Automate retraining and system health checks. 
+- **CI Unit Tests**: Ensure code quality and reliability through automated testing.
+- **GitHub Actions**: Automates testing, building, and deployment workflows.  
+- **Docker Hub**: Stores and distributes Docker images for the services.   
 
 ![Architecture](docs/images/architecture.png)
+ 
+> - For GitHub Actions, please refer to: [GitHub Actions](https://github.com/claudiawis/OCR_Handwritting_MLOps/actions)  
+> - For Docker Hub, check: [Docker Hub Repository](https://hub.docker.com/repository/docker/claudiawis/ocr_handwritting_mlops/general)
 
 ## API Endpoints:
 
