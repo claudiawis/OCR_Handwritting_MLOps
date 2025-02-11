@@ -1,5 +1,7 @@
 # Handwritten Text Recognition Using Deep Learning (OCR MLOps Project)
 
+> **Note:** This is a general overview of the project. For technical details and commands to reproduce the work, please refer to the [Technical Guide](TECHNICAL_GUIDE.md).
+
 ## Introduction
 
 Handwritten text recognition (HTR) is a crucial step in document digitization, allowing computers to extract and process handwritten text from images. This project aims to develop an end-to-end **Optical Character Recognition (OCR)** system for handwritten documents, leveraging **deep learning techniques** and **MLOps principles** to ensure efficient model deployment and maintenance.
@@ -115,9 +117,16 @@ The diagram below illustrates the overall architecture of the project. It consis
 - **Prediction Service**: Provides model inference for users.  
 - **MLflow**: Tracks experiments and model versions.  
 - **Monitoring**: Automate system health checks.
-- **Cron Jobs**: Automate retraining and system health checks.   
+- **Cron Jobs**: Automate retraining and system health checks. 
+- **CI Unit Tests**: Ensure code quality and reliability through automated testing.
+- **GitHub Actions**: Automates testing, building, and deployment workflows.  
+- **Docker Hub**: Stores and distributes Docker images for the services.   
 
 ![Architecture](docs/images/architecture.png)
+
+### Notes  
+- For GitHub Actions, please refer to: [GitHub Actions](https://github.com/claudiawis/OCR_Handwritting_MLOps/actions)  
+- For Docker Hub, check: [Docker Hub Repository](https://hub.docker.com/repository/docker/claudiawis/ocr_handwritting_mlops/general)
 
 ## API Endpoints:
 
