@@ -50,7 +50,7 @@ The solution is intended for industries such as **insurance, healthcare, and adm
     │   │   ├── prediction.py              <- Loads OCR model and define API '/predict' endpoints for prediction
     │   │   ├── gateway.py                 <- Implements authentication, role-based access control, and request distribution for prediction, training, and ingestion services
     │   │   ├── Dockerfile-prediction      <- Dockerfile for the prediction microservice
-    │   │   ├── Dockerfile-gateway         <- Dockerfile for the Gateway Service
+    │   │   ├── Dockerfile-gateway         <- Dockerfile for the Gateway service
     │   └   └── requirements.txt           <- Dependencies required for running the prediction service
     │
     ├── data/                              <- Directory for storing raw and processed data
@@ -58,53 +58,53 @@ The solution is intended for industries such as **insurance, healthcare, and adm
     │   ├── processed/                     <- Processed data
     │   │   └── .gitignore                 <- Files to be excluded from Git version control dataset
     │   │
-    │   ├── raw/                         <- Raw data
-    │   │   ├── .gitignore               <- Files to be excluded from Git version control dataset
-    │   │   ├── raw_data/data/raw/       <- Extracted data
-    │   │   │   ├── words/               <- Extracted images
-    │   └   └── ascii/                   <- Extracted metadata
+    │   ├── raw/                           <- Raw data
+    │   │   ├── .gitignore                 <- Files to be excluded from Git version control dataset
+    │   │   ├── raw_data/data/raw/         <- Extracted data
+    │   │   │   ├── words/                 <- Extracted images
+    │   └   └── ascii/                     <- Extracted metadata
     │
-    ├── models/                          <- Saved trained models
+    ├── models/                            <- Saved trained models
     │
-    ├── prometheus_data/                 <- Stores Prometheus configuration and monitoring data
-    │   ├── alerting_rules               <- Defines alerting rules for triggering notifications
-    │   └── prometheus.yml               <- Prometheus configuration file
+    ├── prometheus_data/                   <- Stores Prometheus configuration and monitoring data
+    │   ├── alerting_rules                 <- Defines alerting rules for triggering notifications
+    │   └── prometheus.yml                 <- Prometheus configuration file
     │
-    ├── grafana_data/                    <- Stores Grafana-related configuration and data
+    ├── grafana_data/                      <- Stores Grafana-related configuration and data
     │   ├── provisioning/
     │   │   ├── dashboards/
-    │   │   │   └── dashboards.yaml      <- Specifies available dashboards configuration
+    │   │   │   └── dashboards.yaml        <- Specifies available dashboards configuration
     │   │   ├── datasources/
-    │   └   └   └── datasource.yml       <- Specifies data source configuration
+    │   └   └   └── datasource.yml         <- Specifies data source configuration
     │
-    ├── alertmanager/                    <- Configures alerting rules for system failures
+    ├── alertmanager/                      <- Configures alerting rules for system failures
     │
-    ├── tests/                           <- Contains unit test scripts
-    │   ├── test_data/                   <- Unit test scripts for the data ingestion service
-    │   ├── test_models/                 <- Unit test scripts for the model training service
-    │   └── Dockerfile-tests             <- Dockerfile for the test Service
+    ├── tests/                             <- Contains unit test scripts
+    │   ├── test_data/                     <- Unit test scripts for the data ingestion service
+    │   ├── test_models/                   <- Unit test scripts for the model training service
+    │   └── Dockerfile-tests               <- Dockerfile for the test service
     │
-    ├── docs/                            <- Documentation for the project
+    ├── docs/                              <- Documentation for the project
     │
-    ├── logs/                            <- Storing application runtime logs
+    ├── logs/                              <- Storing application runtime logs
     │
-    ├── .dvc/                            <- stores stores metadata for DVC-tracked files, cache, and configurations
+    ├── .dvc/                              <- stores stores metadata for DVC-tracked files, cache, and configurations
     │
-    ├── .github/                         <- Files and folders to be excluded from Git version control
-    │   ├── workflow/                    <- Unit test scripts for the data ingestion service
-    │   └   └── test.yml                 <- CI workflow to install dependencies, pull DVC data, check files, and run tests
+    ├── .github/                           <- Files and folders to be excluded from Git version control
+    │   ├── workflow/                      <- Unit test scripts for the data ingestion service
+    │   └   └── test.yml                   <- CI workflow to install dependencies, pull DVC data, check files, and run tests
     │
-    ├── .gitignore                       <- Files and folders to be excluded from Git version control
-    ├── .dvcignore                       <- Files and folders to be excluded from DVC tracking
-    ├── .dockerignore                    <- Files and folders to be excluded from Docker builds
-    ├── docker-compose.yml               <- Runs containerized services (API, database, monitoring)
-    ├── dvc.lock                         <- DVC metadata tracking file
-    ├── dvc.yaml                         <- Defines DVC pipeline stages 
-    ├── run_mlops_pipeline.ah            <- Automates the pipeline in Linux (prompt command)
-    ├── run_mlops_pipeline.ps1           <- Automates the pipeline in Windows (PowerShell)
-    ├── requirements.txt                 <- Dependencies required for running the project
-    ├── TECHNICAL_GUIDE.md               <- Detailed technical guide
-    └── README.md                        <- Project overview
+    ├── .gitignore                         <- Files and folders to be excluded from Git version control
+    ├── .dvcignore                         <- Files and folders to be excluded from DVC tracking
+    ├── .dockerignore                      <- Files and folders to be excluded from Docker builds
+    ├── docker-compose.yml                 <- Runs containerized services (API, database, monitoring)
+    ├── dvc.lock                           <- DVC metadata tracking file
+    ├── dvc.yaml                           <- Defines DVC pipeline stages 
+    ├── run_mlops_pipeline.ah              <- Automates the pipeline in Linux (prompt command)
+    ├── run_mlops_pipeline.ps1             <- Automates the pipeline in Windows (PowerShell)
+    ├── requirements.txt                   <- Dependencies required for running the project
+    ├── TECHNICAL_GUIDE.md                 <- Detailed technical guide
+    └── README.md                          <- Project overview
 
 ## Architecture Diagram
 
